@@ -1,0 +1,177 @@
+@import '../../public/variable.less';
+
+.ant-carousel .slick-slide {
+  text-align: center;
+  height: 600px;
+  line-height: 600px;
+  background: #364d79;
+  overflow: hidden;
+}
+
+.banner {
+  height: 600px;
+  object-fit: cover;
+}
+
+.index-container {
+  .container {
+    text-align: center;
+  }
+  .icon-vs {
+    position: absolute;
+    top: 0;
+    width: 480px;
+    left: 50%;
+    margin-left: -240px;
+  }
+  .title {
+    margin-top: 90px;
+    padding-bottom: 27px;
+    position: relative;
+    font-size: 56px;
+    color: @color-primary;
+    font-weight: bold;
+    // &:hover {
+    //   &::after {
+    //     width: 800px;
+    //     margin-left: -400px;
+    //   }
+    // }
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 230px;
+      height: 6px;
+      margin-left: -115px;
+      background: @color-primary;
+      .transition();
+    }
+  }
+  .news-list {
+    display: flex;
+    margin-top: 60px;
+    height: 415px;
+    .left-box {
+      display: flex;
+      flex: 3;
+      flex-direction: column;
+      justify-content: space-between;
+      .item {
+        flex: 1;
+        width: 100%;
+        margin-bottom: 10px;
+        background: #a6a6a6;
+        font-size: 48px;
+        font-weight: bold;
+        color: white;
+        line-height: 130px;
+        cursor: pointer;
+        .transition();
+        &:last-child {
+          margin-bottom: 0;
+        }
+        &:hover, &.active {
+          background: @color-primary;
+        }
+      }
+    }
+    .right-box {
+      flex: 7;
+      margin-left: 10px;
+      padding: 10px;
+      box-sizing: border-box;
+      .right-img {
+        width: 100%;
+      }
+      .complain {
+        margin: 0;
+        font-size: 20px;
+        text-align: left;
+        &:nth-of-type(1) {
+          margin-top: 25px;
+        }
+      }
+    }
+  }
+  .img_servicr {
+    margin-top: 100px;
+    width: 970px;
+  }
+  .service-list {
+    display: flex;
+    margin-top: 35px;
+  }
+  .service-item {
+    flex: 1;
+    &_icon {
+      width: 50px;
+      height: 50px;
+    }
+    &_title {
+      font-size: 26px;
+      font-weight: bold;
+    }
+    &_desc {
+      width: 180px;
+      margin: 0 auto;
+      font-size: 20px;
+    }
+  }
+
+  .leader-img {
+    height: 100px;
+  }
+}
+
+// 任务介绍
+
+.introduce {
+  .thumb {
+    margin-top: -60px;
+    margin-left: 60px;
+    height: 570px;
+    overflow: hidden;
+    img {
+      width: 425px;
+    }
+  }
+  .context {
+    height: 450px;
+    box-sizing: border-box;
+    margin: 140px 0;
+    padding: 90px 80px 40px 550px;
+    text-align: left;
+    color: #585858;
+    font-size: 18px;
+    line-height: 1.2;
+    & + .fr {
+      padding-right: 550px;
+      padding-left: 80px;
+      text-align: right;
+    }
+    .name {
+      font-size: 51px;
+      color: @color-primary;
+      margin-bottom: 10px;
+    }
+    .reward {
+      font-size: 24px;
+      color: @color-primary;
+      margin-bottom: 25px;
+    }
+  }
+  .fr + .context{
+    margin-bottom: 0;
+    padding-right: 550px;
+    padding-left: 80px;
+    text-align: right;
+  }
+  & + .introduce {
+    .context {
+      margin-top: 0;
+    }
+  }
+}
+

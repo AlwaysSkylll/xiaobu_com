@@ -1,0 +1,24 @@
+{
+  "presets": [
+    // ["next/babel", {
+    //   "preset-env": {},
+    //   "transform-runtime": {},
+    //   "styled-jsx": {},
+    //   "class-properties": {}
+    // }],
+    "next/babel",
+    "@zeit/next-typescript/babel"
+  ],
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./"],
+      "alias": {
+        "@": "./"
+      }
+    }],
+    ["import", {
+      "libraryName": "antd",
+      "style": "css"
+    }]
+  ]
+}
