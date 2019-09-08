@@ -17,6 +17,13 @@ class Index extends React.PureComponent<{}, {}, any> {
   }
 
   componentDidMount() {
+    const { WOW } = require('wowjs')
+    const wow = new WOW({
+      offset: 10,
+      live: false,
+      // mobile: true,
+    })
+    wow && wow.init();
   }
 
   public render() {
@@ -37,7 +44,7 @@ class Index extends React.PureComponent<{}, {}, any> {
         <div className="index-container bg-gray pb-100 pt-100">
           <div className="container">
             <img src="/static/home/news.png" alt=""/>
-            <div className="news-list">
+            <div className="news-list wow bounceIn" >
               <div className="left-box">
                 {['门店管理', '学管师案例', '小步动态'].map((item, index) => {
                   return (
@@ -90,12 +97,12 @@ class Index extends React.PureComponent<{}, {}, any> {
               <div className="thumb fl"><img src="/static/home/chen.jpg" alt=""/></div>
               <div className="context bg-gray">
                 <p className="name">陈冬华</p>
-                <div className="reward">
+                <div className="reward animated wow bounceInRight">
                   中国教育家协会联盟副主席<br/>
                   学乐云教学董事长<br />
                   小步智学产品总设计师<br />
                 </div>
-                <p className="detail">出身教育世家，33年不间断地学习苏联教育大家——苏霍姆林斯基的大量专著，积淀了深厚的教育教学理论，通过近20年一线教育实践的深刻剖析，形成全新的“以学为中心”的教学体系。用执着的信念践行着伟大的教育梦想，借助小步智学智能学习中心的推广，把自适应学习系统带给更多学生，实现教育资源均衡化，让教育变得公平而有质量！</p>
+                <p className="detail wow bounceInRight">出身教育世家，33年不间断地学习苏联教育大家——苏霍姆林斯基的大量专著，积淀了深厚的教育教学理论，通过近20年一线教育实践的深刻剖析，形成全新的“以学为中心”的教学体系。用执着的信念践行着伟大的教育梦想，借助小步智学智能学习中心的推广，把自适应学习系统带给更多学生，实现教育资源均衡化，让教育变得公平而有质量！</p>
               </div>
             </div>
 
@@ -105,11 +112,11 @@ class Index extends React.PureComponent<{}, {}, any> {
               <div className="thumb fr"><img src="/static/home/wang.png" alt="" /></div>
               <div className="context">
                 <p className="name">王刚</p>
-                <div className="reward">
+                <div className="reward wow bounceInLeft">
                   阿里巴巴前高管<br />
                   滴滴出行联合创始人与投资人<br />
                 </div>
-                <p className="detail">王刚认为，教育领域必将出现类似滴滴改变出行，阿里改变商业这样的一个大型互联网公司。</p>
+                <p className="detail wow bounceInLeft">王刚认为，教育领域必将出现类似滴滴改变出行，阿里改变商业这样的一个大型互联网公司。</p>
               </div>
             </div>
 
@@ -117,11 +124,11 @@ class Index extends React.PureComponent<{}, {}, any> {
               <div className="thumb fl"><img src="/static/home/zhu.png" alt="" /></div>
               <div className="context">
                 <p className="name">朱啸虎</p>
-                <div className="reward">
+                <div className="reward wow bounceInRight">
                   金沙江创投基金合伙人<br />
                   领投滴滴出行、饿了么、去哪儿等当红项目<br />
                 </div>
-                <p className="detail">朱啸虎认为，投资企业最看重的是它的切入方式。小步智学一直在给教育做减法，用人工智能的技术手段优化教与学，是真正懂教育的企业。</p>
+                <p className="detail wow bounceInRight">朱啸虎认为，投资企业最看重的是它的切入方式。小步智学一直在给教育做减法，用人工智能的技术手段优化教与学，是真正懂教育的企业。</p>
               </div>
             </div>
 

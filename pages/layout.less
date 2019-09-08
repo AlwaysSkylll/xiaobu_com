@@ -81,7 +81,7 @@
 
 .footer {
   &-container {
-    height: 370px;
+    height: 420px;
     background: @color-dark-primary;
     color: white;
     font-size: 12px;
@@ -95,7 +95,7 @@
       margin-top: 0;
       margin-bottom: 20px;
       font-size: 12px;
-      transform: scale(0.75);
+      // transform: scale(0.75);
       transform-origin: left;
       cursor: pointer;
     }
@@ -104,7 +104,7 @@
       height: 120px;
       margin-top: 60px;
     }
-    .container {
+    &> .container {
       padding: 20px 200px 0 200px;
       box-sizing: border-box;
       display: flex;
@@ -115,7 +115,7 @@
       border-top: 5px solid white;
       text-align: left;
       .detail {
-        transform: scale(0.75);
+        // transform: scale(0.75);
         transform-origin: left;
         margin-top: 10px;
       }
@@ -129,6 +129,117 @@
         margin-top: 25px;
         transform: scale(1);
       }
+    }
+  }
+}
+
+.form-affix_container {
+  height: 50px;
+  width: 100%;
+  background: #1094cc;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  .form-body {
+    height: 100%;
+    display: flex;
+    .text {
+      flex: 1;
+      margin: 0 20px;
+      font-size: 24px;
+      color: white;
+    }
+    .ant-input {
+      border-radius: 20px;
+    }
+    .ant-btn {
+      background: @color-primary;
+      border-radius: 20px;
+      &:hover, &:active, &:visited, &:focus {
+        color: white;
+        border-color: white;
+      }
+    }
+  }
+}
+
+.side-bar {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  margin-top: -50px;
+  height: 100px;
+  z-index: 9999;
+
+  &_item {
+    position: relative;
+    height: 50%;
+    color: #00a7e1;
+    line-height: 1.2;
+    width: 50px;
+    &:hover {
+      .side-bar_content {
+        left: -140px;
+        opacity: 1;
+        background: #00a7e1;
+        color: white;
+      }
+      &:last-child {
+        .side-bar_content,
+        .side-bar_icon {
+          background: #2a679f;
+        }
+        color: white;
+      }
+    }
+    .contact-way {
+      height: 100%;
+      font-size: 12px;
+      font-weight: bold;
+      display: inline-block;
+      padding: 4px;
+    }
+    .contact-number {
+      height: 100%;
+      margin-left: 10px;
+      font-size: 16px;
+      line-height: 1.1;
+      font-weight: bold;
+      display: inline-block;
+      color: white;
+    }
+    &:last-child {
+      .side-bar_icon {
+        background: #2a679f;
+      }
+      .side-bar_content {
+        background: white;
+      }
+      color: #2a679f;
+    }
+  }
+  &_content {
+    position: absolute;
+    left: -50px;
+    padding: 8px;
+    box-sizing: border-box;
+    display: inline-block;
+    width: 140px;
+    height: 100%;
+    background: white;
+    opacity: 1;
+    z-index: 5;
+    .transition();
+  }
+  &_icon {
+    position: absolute;
+    padding: 10px;
+    height: 100%;
+    background: #00a7e1;
+    z-index: 10;
+    cursor: pointer;
+    img {
+      width: 30px;
     }
   }
 }

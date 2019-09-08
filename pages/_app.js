@@ -8,6 +8,7 @@ import style from './layout.less'
 import _style from '@/global.less'
 import store from '@/store'
 import 'babel-polyfill'
+import { Affix, Input, Button } from 'antd';
 
 class Layout extends React.Component {
   state = {
@@ -51,7 +52,8 @@ class Layout extends React.Component {
         <link rel="shortcut icon" type="image/x-icon" href="./static/favicon.ico"></link>
         <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,maximum-scale=2" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-        <link rel="stylesheet" href="//sources.leke.com/resources/animate.min.css" />
+        <link rel="stylesheet" href="/static/animate.min.css" />
+        <script src="/static/echarts.min.js" defer></script>
       </Head>
       <nav className="nav-container">
         <div className="container">
@@ -66,8 +68,41 @@ class Layout extends React.Component {
           </div>
         </div>
       </nav>
+
+      <section className="side-bar">
+        <div className="side-bar_item">
+          <div className="side-bar_icon">
+            <img src="/static/home/phone.png"></img>
+          </div>
+          <div className="side-bar_content">
+            <div className="contact-way">咨询<br/>电话</div>
+            <div className="contact-number">155<br/>05882806</div>
+          </div>
+        </div>
+        <div className="side-bar_item">
+          <div className="side-bar_icon">
+            <img src="/static/home/qq.png"></img>
+          </div>
+          <div className="side-bar_content">
+            <div className="contact-way">咨询<br/>Q Q</div>
+            <div className="contact-number">15<br/>20927740</div>
+          </div>
+        </div>
+      </section>
+
       {this.props.children}
       <section className="footer-container">
+        <Affix offsetBottom={0}>
+          <div className="form-affix_container">
+            <div className="container form-body">
+              <span className="text" style={{flex: 1}}>加盟预约</span>
+              <Input style={{flex: 1, margin: '0 20px',}} placeholder="我的邮箱" allowClear/>
+              <Input style={{flex: 1, margin: '0 20px',}} placeholder="我的手机号" allowClear/>
+              <Input style={{flex: 1, margin: '0 20px',}} placeholder="加盟地区" allowClear/>
+              <Button style={{flex: 1, margin: '0 30px',}} ghost>提交信息</Button>
+            </div>
+          </div>
+        </Affix>
         <div className="container">
           <div className="footer-list">
             <p className="title">首页</p>
@@ -114,13 +149,11 @@ class MyApp extends App {
   render () {
     const { Component, pageProps } = this.props
     return (
-      <Container>
-        <Provider store={store}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </Provider>
-      </Container>
+      <Provider store={store}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </Provider>
     )
   }
 }

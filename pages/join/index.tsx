@@ -49,8 +49,8 @@ class Join extends React.PureComponent<{}, {}, any> {
 
         <div className="about-container index-container pb-100" style={{marginTop: '-70px'}}>
           <div className="container">
-            <img className="title-img" style={{ height: '140px' }} src="/static/join/support.png" alt="" />
-            <p style={{ fontSize: '26px', color: '#585858', lineHeight: '1.4', marginTop: '25px' }}>没做过教育，没经验，没关系！<br/>我们帮你，一站式无忧加盟服务支持。</p>
+            <img className="title-img" style={{ height: '180px' }} src="/static/join/support.png" alt="" />
+            <p style={{ fontSize: '26px', color: '#585858', lineHeight: '1.5', marginTop: '40px', marginBottom: '40px' }}>没做过教育，没经验，没关系！<br/>我们帮你，一站式无忧加盟服务支持。</p>
             <img style={{ width: '100%' }} src="/static/join/support_detail.png" alt="" />
             <img style={{ width: '100%', marginTop: '100px' }} src="/static/join/support_progress.png" alt=""/>
           </div>
