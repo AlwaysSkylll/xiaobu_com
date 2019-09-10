@@ -48,7 +48,7 @@ class Layout extends React.Component {
 
     return (<div className={classNames(style.layout, {active: this.state.isLoaded})}>
       <Head>
-        <title>小步留学官网</title>
+        <title>小步智学官网-每天进步一小步 中小学自适应学习 智能学习 提分利器</title>
         <link rel="shortcut icon" type="image/x-icon" href="./static/favicon.ico"></link>
         <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,maximum-scale=2" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -137,8 +137,8 @@ class Layout extends React.Component {
           </div>
         </div>
         <footer className="footer-copyright container">
-          <p className="detail">Copyright © 2018 hangzhou astap smart leanning Tech co.,ltd. 保留所有权利。</p>
-          <p className="detail">浙公安网安备 11010502008968 浙ICP备10214630  营业执照</p>
+          <p className="detail">Copyright © 2019 杭州小步智学教育科技有限公司 Hangzhou Xiao Bu Zhi Xue Education Technology Co.,Ltd</p>
+          <p className="detail">浙ICP备10214630</p>
         </footer>
       </section>
     </div>)
