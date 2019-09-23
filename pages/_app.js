@@ -37,7 +37,8 @@ class Layout extends React.Component {
   }
 
   componentDidUpdate() {
-    const currentPath = Router && Router.router && Router.router.asPath
+    let currentPath = Router && Router.router && Router.router.asPath
+    currentPath = currentPath === '/' ? '/index' : currentPath
     if (currentPath === this.state.currentPath) return
     currentPath && (this.setState({ currentPath }))
   }

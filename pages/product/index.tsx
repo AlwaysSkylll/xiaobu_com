@@ -2,6 +2,7 @@ import React from "react"
 import { Carousel } from 'antd'
 import classNames from 'classnames'
 import {optionData} from '@/utils/echart-data.js'
+import mobileDetect from 'ismobilejs'
 
 const hoverdIcon = [
   '/static/product/hover_tv.png',
@@ -52,6 +53,10 @@ class Product extends React.PureComponent<{}, {}, any> {
   }
 
   componentDidMount() {
+    this.setState({
+      isMobile: mobileDetect(window.navigator.userAgent).any
+    })
+
     const { WOW } = require('wowjs')
     const wow = new WOW({
       offset: 10,
@@ -65,7 +70,7 @@ class Product extends React.PureComponent<{}, {}, any> {
     const dom = document.getElementById("container");
     const myChart = ECharts.init(dom);
 
-    if (!ECharts) return
+    if (!ECharts || this.state.isMobile) return
 
     const originOptionData = JSON.parse(JSON.stringify(optionData))
 
@@ -125,7 +130,7 @@ class Product extends React.PureComponent<{}, {}, any> {
   public render() {
     return (
       <div>
-        <div className="index-container about-container">
+        {this.state.isMobile ? '' : <div className="index-container about-container">
           <Carousel autoplay afterChange={this.onChange.bind(this)}>
             <img className="banner" src="/static/product/banner1.png"></img>
             <img className="banner" src="/static/product/banner2.png"></img>
@@ -135,9 +140,9 @@ class Product extends React.PureComponent<{}, {}, any> {
           </Carousel>
           <div style={{height: '550px'}} className="gray-empty-block bg-gray">
           </div>
-        </div>
+        </div>}
 
-        <div className="index-container about-container">
+        {this.state.isMobile ? '' : <div className="index-container about-container">
           <div className="container" style={{marginTop: '-480px'}}>
             <img style={{ height: '180px', zIndex: 5, position: 'relative' }} src="/static/product/online.png" alt="" />
             <div className="online-system wow fadeIn">
@@ -162,23 +167,36 @@ class Product extends React.PureComponent<{}, {}, any> {
               </div>
             </div>
           </div>
-        </div>
+        </div>}
 
-        <div className="index-container about-container" style={{marginTop: '-200px'}}>
+        {this.state.isMobile ? [
+          <div key="1" className="index-container about-container pt-100">
+            <img className="product_img-online" src="/static/product/online.png" alt="" />
+          </div>,
+          <img key="2" className="max-width pb-60" src="/static/product/online-mobile.png" alt="" />
+        ] : ''}
+
+        {this.state.isMobile ? '' : <div className="index-container about-container" style={{marginTop: '-200px'}}>
           <img style={{ height: '1300px', width: '100%' }} className="banner" src="/static/product/computer.png" alt="" />
-        </div>
+        </div>}
 
-        <div className="index-container about-container pb-100" style={{marginTop: '-460px'}}>
+        <div className="index-container about-container pb-100" style={{ marginTop: this.state.isMobile ? '0' : '-460px'}}>
           <div className="container" >
-            <img style={{width: '690px'}} src="/static/product/comment.jpg" alt=""/>
-            <div style={{ borderBottom: '24px solid #d7d7d7', fontSize: '50px', color: '#585858', lineHeight: '30px', marginTop: '90px', width: '550px', display: 'inline-block'}}>传统教培机构的评价误区</div>
-            <img style={{ height: '500px', marginTop: '40px' }} src="/static/product/question.png" alt="" />
+            <img className="product_img-comment" src="/static/product/comment.jpg" alt=""/>
+            <div className="product_comment-context">{this.state.isMobile ? '传统教培评价标准' : '传统教培机构的评价误区'}</div>
+            <img className="product_img-question" src="/static/product/question.png" alt="" />
           </div>
         </div>
-        <div className="index-container about-container pb-100" style={{ marginTop: '-90px' }}>
-          <img style={{ width: '100%', height: '300px', marginTop: '40px', marginBottom: '10px' }} className="banner" src="/static/product/middle_banner.png" alt="" />
+        <div className="index-container about-container pb-100" style={{ marginTop: this.state.isMobile ? '-20px' : '-50px' }}>
+          <img className="banner product_img-mid-banner" src="/static/product/middle_banner.png" alt="" />
+          {this.state.isMobile ? <div className="product-qinghua_context">
+            <p className="producti-qinghua_line">首创以“清华北大”</p>
+            <p className="producti-qinghua_line">为最高目标的五级闯关制度。</p>
+            <p className="producti-qinghua_line">课堂某一知识点达到“清华北大”，</p>
+            <p className="producti-qinghua_line">意味着学生已经熟练掌握该知识点。</p>
+          </div> : ''}
           <div className="container wow zoomInUp" >
-            <img style={{ width: '100%', marginTop: '10px' }} src="/static/product/qinghua.png" alt="" />
+            <img style={{ width: '100%', marginTop: '10px' }} src={this.state.isMobile ? '/static/product/qinghua_mobile.png' : '/static/product/qinghua.png'} alt="" />
           </div>
         </div>
 
@@ -188,7 +206,10 @@ class Product extends React.PureComponent<{}, {}, any> {
 
             <div className="improve-ways">
               <div className="left-box wow bounceInLeft">
-                <div className="improve-ways_title">融入国际心流理论<br/>游戏化通关<br />挑战更高学习目标</div>
+                {
+                  this.state.isMobile ? <div className="improve-ways_title">融入国际心流理论<br />游戏化通关挑战更高学习目标</div>
+                  : <div className="improve-ways_title">融入国际心流理论<br/>游戏化通关<br />挑战更高学习目标</div>
+                }
                 <div className="improve-ways_desc">游戏化闯关过程中，<br/>学生不知不觉进入“心流”通道，<br/>形成高度专注的学习状态，<br/>不断增强技能水平，<br/>增加挑战感，越学越想学，<br/>从而使学生达成更高目标。</div>
               </div>
 
@@ -199,34 +220,49 @@ class Product extends React.PureComponent<{}, {}, any> {
           </div>
         </div>
 
-        <div className="index-container about-container" style={{paddingTop: '80px', paddingBottom: '80px'}}>
+        <div className="index-container about-container product-chuangguan-container">
           <div className="container" >
-            <img style={{ width: '800px' }} src="/static/product/chuangguan.png" alt="" />
+            <img className="max-width" style={{ width: '800px' }} src="/static/product/chuangguan.png" alt="" />
           </div>
         </div>
 
 
-        <div className="index-container about-container bg-gray pb-100 pt-100">
-          <div className="container" >
-            <img style={{ height: '180px', zIndex: 5, position: 'relative' }} src="/static/product/offline.png" alt="" />
-            <img style={{ width: '100%', marginTop: '-90px' }} src="/static/product/environment.png" alt=""/>
+        {
+          this.state.isMobile ?
+          <div className="index-container about-container bg-gray product_img-environment-container">
+            <img className="product_img-environment_mobile" src="/static/product/environment_mobile.png" alt="" />
+          </div> :
+          <div className="index-container about-container bg-gray pb-100 pt-100">
+            <div className="container" >
+              <img className="product_img-offline" src="/static/product/offline.png" alt="" />
+              <img className="product_img-environment" src="/static/product/environment.png" alt=""/>
+            </div>
           </div>
-        </div>
+        }
 
-        <div className="index-container about-container" style={{ paddingTop: '60px', paddingBottom: '60px', background: '#00a7e1' }}>
+        <div className="index-container about-container pt-60 pb-60" style={{ background: '#00a7e1' }}>
           <div className="container" >
-            <img style={{ height: '170px' }} src="/static/product/adapt_study.png" alt="" />
-            <p style={{color: 'white', fontSize: '26px', marginTop: '30px', marginBottom: '30px'}}>五大产品功能，打通学生提升通道的“任督二脉”</p>
+            <img className="product_img-adapt_study" src="/static/product/adapt_study.png" alt="" />
+            <p className="product_adapt-context">五大产品功能，打通学生提升通道的“任督二脉”</p>
 
-            <div className="chart-container wow bounceIn" style={{ width: '650px', height: '650px', margin: 'auto', position: 'relative' }}>
+            {this.state.isMobile ? <img className="max-width" src="/static/product/chart-mobile.png" alt="" /> : <div className="chart-container wow bounceIn">
               <div id="container" style={{ width: '100%', height: '100%', margin: 'auto'}}></div>
               <div style={{ color: 'white', fontSize: '16px', position: 'absolute', top: '50%', left: '50%', marginLeft: '-80px', marginTop: '-80px', width: '160px', height: '160px', borderRadius: '50%', display: 'flex', alignItems: 'center' }}>{this.state.hoverText[this.state.chartsIndex]}</div>
-            </div>
+            </div>}
 
           </div>
         </div>
 
-        <div className="index-container about-container" style={{ paddingTop: '80px', paddingBottom: '80px' }}>
+        {
+          this.state.isMobile ?
+            <div className="index-container about-container product-result-container">
+              {[1,2,3,4,5].map((item, index) => {
+                return <img key={index} src={`/static/product/result-mobile${item}.png`} alt="" />
+              })}
+            </div> : ''
+        }
+
+        <div className={classNames(['index-container', 'about-container', 'pt-60', 'pb-60', { 'bg-gray': this.state.isMobile }])}>
           <div className="container" >
             <div className="bordered-title">遇见小步智学，<br/>遇见比你想象中更好的自己</div>
           </div>

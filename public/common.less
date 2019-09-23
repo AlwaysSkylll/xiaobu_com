@@ -1,3 +1,6 @@
+@plugin "../public/plugins/index";
+@import (reference) '../public/variable.less';
+
 .pull-left {
   float: left;
 }
@@ -16,42 +19,76 @@
   text-align: right;
 }
 .text-bold {
-  font-size: .42rem;
   font-weight: bold;
 }
 
 .text-slim {
-  margin-left: .2rem;
-  font-size: .32rem;
   font-weight: normal;
 }
 
 .margin-around-5 {
   margin: 5px;
+  @media screen and (max-width: @sizes[tablet]) {
+    margin: vw(5);
+  }
 }
 
 .pb-100 {
   padding-bottom: 100px;
+  @media screen and (max-width: @sizes[tablet]) {
+    padding-bottom: vw(50);
+  }
 }
 
 .pt-100 {
   padding-top: 100px;
+  @media screen and (max-width: @sizes[tablet]) {
+    padding-top: vw(50);
+  }
+}
+
+.pb-60 {
+  padding-bottom: 60px;
+
+  @media screen and (max-width: @sizes[tablet]) {
+    padding-bottom: vw(30);
+  }
+}
+
+.pt-60 {
+  padding-top: 60px;
+
+  @media screen and (max-width: @sizes[tablet]) {
+    padding-top: vw(30);
+  }
 }
 
 .pb-50 {
   padding-bottom: 50px;
+  @media screen and (max-width: @sizes[tablet]) {
+    padding-bottom: vw(25);
+  }
 }
 
 .pt-50 {
   padding-top: 50px;
+  @media screen and (max-width: @sizes[tablet]) {
+    padding-top: vw(25);
+  }
 }
 
 .mt-50 {
   margin-top: 50px;
+  @media screen and (max-width: @sizes[tablet]) {
+    margin-top: vw(25);
+  }
 }
 
 .mb-50 {
   margin-bottom: 50px;
+  @media screen and (max-width: @sizes[tablet]) {
+    margin-bottom: vw(25);
+  }
 }
 
 .fl {

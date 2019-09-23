@@ -1,6 +1,7 @@
 import React from "react"
 import { Carousel } from 'antd';
 import classNames from 'classnames'
+import mobileDetect from 'ismobilejs'
 
 class Index extends React.PureComponent<{}, {}, any> {
   state: any = {
@@ -9,7 +10,8 @@ class Index extends React.PureComponent<{}, {}, any> {
       { img: '/static/home/news2.png', complains: ['1、7天冲刺班，解决1学期的重难点知识！从80分到95分只要轻轻一跃！', '2、这家店暑假班“喜提”千人报名！全凭期末考有92%的学员提分！', '3、期末考逆袭，语数英全部提升20分！孩子哭了：原来我也可以这么优秀!'] },
       { img: '/static/home/news3.png', complains: ['1、学有所获，100 % 落地实操的培训技能，小步智学第10期学管师培训回顾。', '2、快讯丨小步智学又双叒叕在这些地方开业啦！你知道吗？', '3、百舸争流——小步智学参加第76届中国教育装备展！'] },
     ],
-    newsIndex: 0
+    newsIndex: 0,
+    isMobile: false,
   }
 
   onChange(currentSlide: number) {
@@ -17,6 +19,10 @@ class Index extends React.PureComponent<{}, {}, any> {
   }
 
   componentDidMount() {
+    this.setState({
+      isMobile: mobileDetect(window.navigator.userAgent).any
+    })
+
     const { WOW } = require('wowjs')
     const wow = new WOW({
       offset: 10,
@@ -24,26 +30,30 @@ class Index extends React.PureComponent<{}, {}, any> {
       // mobile: true,
     })
     wow && wow.init();
+
   }
 
   public render() {
     return (
       <div>
         <div className="index-container pb-100">
-          <Carousel autoplay afterChange={this.onChange.bind(this)}>
-            <img className="banner" src="/static/home/banner1.png"></img>
-            <img className="banner" src="/static/home/banner2.png"></img>
-            <img className="banner" src="/static/home/banner3.png"></img>
-          </Carousel>
+          {
+            this.state.isMobile ? '' :
+              (<Carousel autoplay afterChange={this.onChange.bind(this)}>
+                <img className="banner" src="/static/home/banner1.png"></img>
+                <img className="banner" src="/static/home/banner2.png"></img>
+                <img className="banner" src="/static/home/banner3.png"></img>
+              </Carousel>)
+          }
           <div className="container">
             <p className="title">教培升级，我选小步智学！</p>
             <img className="icon-vs" src="/static/home/VS@2x.png" alt="" />
-            <img className="container" src="/static/home/table@2x.png" alt="" />
+            <img className="container" src={this.state.isMobile ? '/static/home/table_mobile.png' : '/static/home/table@2x.png'} alt="" />
           </div>
         </div>
-        <div className="index-container bg-gray pb-100 pt-100">
+        <div className={classNames(['index-container', 'bg-gray', 'pb-100', 'pt-100'])}>
           <div className="container">
-            <img src="/static/home/news.png" alt=""/>
+            <img className="img_service img_news" src="/static/home/news.png" alt=""/>
             <div className="news-list wow bounceIn" >
               <div className="left-box">
                 {['门店管理', '学管师案例', '小步动态'].map((item, index) => {
@@ -59,7 +69,7 @@ class Index extends React.PureComponent<{}, {}, any> {
                 })}
               </div>
             </div>
-            <img className="img_servicr" src="/static/home/service.png" alt=""/>
+            <img className="img_service" src="/static/home/service.png" alt=""/>
             <div className="service-list">
               <div className="service-item">
                 <img className="service-item_icon" src="/static/home/open.png" alt=""/>
@@ -91,10 +101,10 @@ class Index extends React.PureComponent<{}, {}, any> {
         </div>
         <div className="index-container pt-100">
           <div className="container">
-            <img className="leader-img" style={{ height: '160px' }} src="/static/home/leader.png" alt=""/>
+            <img className="leader-img" src="/static/home/leader.png" alt=""/>
 
             <div className="introduce">
-              <div className="thumb fl"><img src="/static/home/chen.jpg" alt=""/></div>
+              <div className="thumb fl"><img src={this.state.isMobile ? '/static/home/chen2.png' : '/static/home/chen.jpg'} alt=""/></div>
               <div className="context bg-gray">
                 <p className="name">陈冬华</p>
                 <div className="reward animated wow bounceInRight">
@@ -106,11 +116,11 @@ class Index extends React.PureComponent<{}, {}, any> {
               </div>
             </div>
 
-            <img className="leader-img" src="/static/home/donator.jpg" alt="" />
+            <img className="leader-img leader-img2" src="/static/home/donator.jpg" alt="" />
 
             <div className="introduce">
-              <div className="thumb fr"><img src="/static/home/wang.png" alt="" /></div>
-              <div className="context">
+              <div className="thumb fr"><img className="img-ghost" src="/static/home/wang.png" alt="" /></div>
+              <div className="context context-ghost">
                 <p className="name">王刚</p>
                 <div className="reward wow bounceInLeft">
                   阿里巴巴前高管<br />
@@ -121,8 +131,8 @@ class Index extends React.PureComponent<{}, {}, any> {
             </div>
 
             <div className="introduce">
-              <div className="thumb fl"><img src="/static/home/zhu.png" alt="" /></div>
-              <div className="context">
+              <div className="thumb fl"><img className="img-ghost" src="/static/home/zhu.png" alt="" /></div>
+              <div className="context context-ghost">
                 <p className="name">朱啸虎</p>
                 <div className="reward wow bounceInRight">
                   金沙江创投基金合伙人<br />
