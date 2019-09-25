@@ -9,8 +9,15 @@ import _style from '@/global.less'
 import store from '@/store'
 import 'babel-polyfill'
 import { Affix, Input, Button } from 'antd';
+const HOST = '//xb.buy0571.com'
+const telRegx = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/
+
 
 class Layout extends React.Component {
+  mail = ''
+  area= ''
+  phone= ''
+
   state = {
     navItems: [
       { name: '首页', desc: 'PORTAL', path: 'index' },
@@ -22,6 +29,8 @@ class Layout extends React.Component {
   }
 
   componentDidMount() {
+    require('whatwg-fetch')
+
     const currentPath = Router && Router.router && Router.router.asPath
     if (currentPath === this.state.currentPath) return
     currentPath && (this.setState({ currentPath }))
@@ -41,6 +50,50 @@ class Layout extends React.Component {
     currentPath = currentPath === '/' ? '/index' : currentPath
     if (currentPath === this.state.currentPath) return
     currentPath && (this.setState({ currentPath }))
+  }
+
+  emptyCheck() {
+    if (!this.mail.state.value || !this.phone.state.value || !this.area.state.value) {
+      alert('请填写个人信息')
+      return;
+    }
+    if (!telRegx.test(this.phone.state.value)) {
+      alert('手机格式不正确')
+      return;
+    }
+    return true;
+  }
+
+  submit() {
+    console.log(this.mail.state.value, this.phone.state.value, this.area.state.value)
+    if (!this.emptyCheck()) return
+
+    const formData = new FormData();
+    formData.append('name', this.mail.state.value)
+    formData.append('phone', this.phone.state.value)
+    formData.append('area', this.area.state.value)
+
+
+    window.fetch(`${HOST}/api/join`, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        // "Accept": "application/json",
+        // "Content-Type": "application/json;charset=UTF-8",
+        // "Content-Type": "multipart/form-data"
+      },
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      if (data.success) {
+        alert('提交成功')
+        return;
+      }
+      alert(data.message)
+    }, (error) => {
+      console.error(error)
+      alert('提交失败')
+    })
   }
 
   render () {
@@ -97,10 +150,10 @@ class Layout extends React.Component {
           <div className="form-affix_container">
             <div className="container form-body">
               <span className="text" style={{flex: 1}}>加盟预约</span>
-              <Input style={{flex: 1, margin: '0 20px',}} placeholder="我的邮箱" allowClear/>
-              <Input style={{flex: 1, margin: '0 20px',}} placeholder="我的手机号" allowClear/>
-              <Input style={{flex: 1, margin: '0 20px',}} placeholder="加盟地区" allowClear/>
-              <Button style={{flex: 1, margin: '0 30px',}} ghost>提交信息</Button>
+              <Input style={{flex: 1, margin: '0 20px',}} ref={input => this.mail = input} placeholder="您的称呼" allowClear/>
+              <Input maxLength={11} style={{ flex: 1, margin: '0 20px', }} ref={input => this.phone = input} placeholder="预约手机号" allowClear/>
+              <Input style={{flex: 1, margin: '0 20px',}} ref={input => this.area = input} placeholder="加盟地区" allowClear/>
+              <Button style={{flex: 1, margin: '0 30px',}} ghost onClick={this.submit.bind(this)}>提交信息</Button>
             </div>
           </div>
         </Affix>
