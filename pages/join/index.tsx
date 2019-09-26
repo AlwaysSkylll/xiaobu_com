@@ -52,7 +52,6 @@ class Join extends React.PureComponent<{}, {}, any> {
   }
 
   onChangeSex(e) {
-    console.log(e.target.value)
     this.setState({
       gender: e.target.value,
     });
@@ -272,7 +271,7 @@ class Join extends React.PureComponent<{}, {}, any> {
           ref={input => this.content = input}
           placeholder="您的建议"
           maxLength={300}
-          autosize={{ minRows: 10 }}
+          autosize={{ minRows: 11 }}
         />
         <div className="">
           <span>验证码</span>
