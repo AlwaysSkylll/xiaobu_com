@@ -199,6 +199,60 @@
   }
 }
 
+.side-bar_mobile {
+  display: none;
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: vw(40);
+  z-index: 9999;
+  .side-bar_content {
+    left: 0;
+    width: 100%;
+    text-align: center;
+    .contact-number {
+      color: #00a7e1;
+      line-height: vw(24);
+    }
+  }
+  .side-bar_item {
+    display: inline-block;
+    height: 100%;
+    width: 50%;
+    bottom: 0;
+    .transition();
+    &:last-child {
+      .contact-number {
+        color: #2a679f;
+      }
+    }
+    &:hover {
+      bottom: vw(40);
+      .side-bar_content {
+        left: 0;
+        bottom: vw(-40);
+        background: white !important;
+      }
+    }
+  }
+  .side-bar_icon {
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: vw(14);
+    img {
+      // width: vw(30);
+      width: vw(20);
+      margin-right: vw(10);
+    }
+  }
+  @media screen and (max-width: @sizes[tablet]) {
+    display: block;
+  }
+}
+
 .side-bar {
   position: fixed;
   right: 0;
@@ -206,7 +260,9 @@
   margin-top: -50px;
   height: 100px;
   z-index: 9999;
-
+  @media screen and (max-width: @sizes[tablet]) {
+    display: none;
+  }
   &_item {
     position: relative;
     height: 50%;

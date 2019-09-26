@@ -144,6 +144,27 @@ class Layout extends React.Component {
         </div>
       </section>
 
+      <section className="side-bar_mobile">
+        <div className="side-bar_item">
+          <div className="side-bar_icon">
+            <img src="/static/home/phone.png"></img>联系小步
+          </div>
+          <div className="side-bar_content">
+            {/* <div className="contact-way"></div> */}
+            <div className="contact-number">15505882806</div>
+          </div>
+        </div>
+        <div className="side-bar_item">
+          <div className="side-bar_icon">
+            <img src="/static/home/qq.png"></img>咨询QQ
+          </div>
+          <div className="side-bar_content">
+            {/* <div className="contact-way"></div> */}
+            <div className="contact-number">1520927740</div>
+          </div>
+        </div>
+      </section>
+
       {this.props.children}
       <section className="footer-container">
         <Affix offsetBottom={0}>
