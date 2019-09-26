@@ -19,6 +19,10 @@
     ["import", {
       "libraryName": "antd",
       "style": "css"
-    }]
+    }],
+    // ["on-demand-import", {
+    //   "libraryName": "react-area-linkage",
+    //   "libraryPath": "dist/lib"
+    // }]
   ]
 }

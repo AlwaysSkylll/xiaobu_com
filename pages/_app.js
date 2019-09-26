@@ -9,7 +9,7 @@ import _style from '@/global.less'
 import store from '@/store'
 import 'babel-polyfill'
 import { Affix, Input, Button } from 'antd';
-const HOST = '//xb.buy0571.com'
+import HOST from '@/utils/api';
 const telRegx = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/
 
 

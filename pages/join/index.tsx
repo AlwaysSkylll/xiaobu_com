@@ -3,11 +3,25 @@ import { Carousel } from 'antd';
 import classNames from 'classnames'
 import mobileDetect from 'ismobilejs'
 import { Radio, Input, Button } from 'antd';
+import 'react-area-linkage/dist/index.css'; // v2 or higher
+import pcaa from 'area-data/pcaa';
+import { AreaSelect } from 'react-area-linkage';
+import HOST from '../../utils/api';
+
+const telRegx = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/
 
 class Join extends React.PureComponent<{}, {}, any> {
+  name:any = {}
+  phone:any = {}
+  email:any = {}
+  content:any = {}
+  company_name:any = {}
+  code:any = {}
+
   state: any = {
-    sex: 1,
+    gender: "先生",
     verifyCode: {},
+    areaList: [],
   }
 
   onChange(currentSlide: number) {
@@ -34,14 +48,111 @@ class Join extends React.PureComponent<{}, {}, any> {
   }
 
   getVertifyResult(code) {
-    this.state.verifyCode.validate(code);
+    return this.state.verifyCode.validate(code);
   }
 
   onChangeSex(e) {
-    console.log(this, e)
+    console.log(e.target.value)
     this.setState({
-      sex: e.target.value,
+      gender: e.target.value,
     });
+  }
+
+  areaChange(areaList) {
+    this.setState({
+      areaList
+    })
+  }
+
+  emptyCheck() {
+    const name = this.name.state.value;
+    const phone = this.phone.state.value;
+    const email = this.email.state.value;
+    const code = this.code.state.value;
+    const content = this.content.textAreaRef.value;
+    const company_name = this.company_name.state.value;
+    const province = this.state.areaList[0];
+    const city = this.state.areaList[1];
+    const county = this.state.areaList[2];
+
+
+    if (!name || !phone || !email || !company_name || !content || !province || !city || !county) {
+      alert('请先填写信息')
+      return;
+    }
+
+    if (!code) {
+      alert('请填写验证码')
+      return;
+    }
+
+    if (!this.getVertifyResult(code)) {
+      alert('验证码错误')
+      return;
+    }
+
+    if (!telRegx.test(this.phone.state.value)) {
+      alert('手机格式不正确')
+      return;
+    }
+    return true;
+  }
+
+  submitForm() {
+    if (!this.emptyCheck()) return
+
+    const name = this.name.state.value;
+    const phone = this.phone.state.value;
+    const email = this.email.state.value;
+    const code = this.code.state.value;
+    const content = this.content.textAreaRef.value;
+    const company_name = this.company_name.state.value;
+    const gender = this.state.gender;
+    const province = this.state.areaList[0];
+    const city = this.state.areaList[1];
+    const county = this.state.areaList[2];
+    console.log({ name, phone, email, content, company_name, gender, province, city, county, code })
+
+    const formData = new FormData();
+    formData.append('name', name)
+    formData.append('phone', phone)
+    formData.append('email', email)
+    formData.append('code', code)
+    formData.append('content', content)
+    formData.append('company_name', company_name)
+    formData.append('gender', gender)
+    formData.append('province', province)
+    formData.append('city', city)
+    formData.append('county', county)
+
+    window.fetch(`${HOST}/api/consult`, {
+      method: 'POST',
+      body: formData,
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      if (data.success) {
+        alert('提交成功')
+        return;
+      }
+      alert(data.msg)
+    }, (error) => {
+      console.error(error)
+      alert('提交失败')
+    })
+  }
+
+  resetForm() {
+    this.name.state.value = '';
+    this.phone.state.value = '';
+    this.email.state.value = '';
+    this.code.state.value = '';
+    this.content.textAreaRef.value = '';
+    this.company_name.state.value = '';
+    this.setState({
+      gender: '先生',
+      areaList: [],
+    })
   }
 
   mobileForm = () => {
@@ -83,25 +194,28 @@ class Join extends React.PureComponent<{}, {}, any> {
         <img className="banner max-width" src="/static/join/join-form_mobile.png"></img>
         <p className="form-title">我要咨询 <span className="form-subtitle">（24小时内获得快速回复）</span> </p>
         <div>
-          <Input style={inlineInputStyle} placeholder="姓名" />
-          <Radio.Group style={inlineRadioGroup} onChange={this.onChangeSex.bind(this)} value={this.state.sex}>
-            <Radio style={radioStyle} value={1}>先生</Radio>
-            <Radio style={radioStyle} value={2}>女士</Radio>
+          <Input ref={input => this.name = input} style={inlineInputStyle} maxLength={20} placeholder="姓名" allowClear/>
+          <Radio.Group style={inlineRadioGroup} onChange={this.onChangeSex.bind(this)} value={this.state.gender}>
+            <Radio style={radioStyle} value="先生">先生</Radio>
+            <Radio style={radioStyle} value="女士">女士</Radio>
           </Radio.Group>
         </div>
-        <Input style={inputStyle} placeholder="电话" type="tel" maxLength={11} />
-        <Input style={inputStyle} placeholder="邮箱" type="tel" />
-        <Input style={inputStyle} placeholder="公司名称" type="tel" />
+        <Input ref={input => this.phone = input} style={inputStyle} placeholder="电话" type="tel" maxLength={11} allowClear/>
+        <Input ref={input => this.email = input} style={inputStyle} maxLength={100} placeholder="邮箱" allowClear/>
+        <Input ref={input => this.company_name = input} style={inputStyle} maxLength={100} placeholder="公司名称" allowClear/>
+        <AreaSelect level={2} type="text" size="small" defaultArea={[]} onChange={this.areaChange.bind(this)} data={pcaa}></AreaSelect>
         <Input.TextArea style={fullInputStyle}
+          ref={input => this.content = input}
           placeholder="您的建议"
+          maxLength={300}
           autosize={{ minRows: 4 }}
         />
         <div className="">
           <span>验证码</span>
-          <Input size="small" style={validateInputStyle} placeholder="验证码" />
-          <Button style={{float: 'right', marginTop: '5px', marginLeft: '10px'}} size="small" type="primary">提交</Button>
-          <Button style={{ float: 'right', marginTop: '5px', marginLeft: '10px' }} size="small">重置</Button>
-          <div style={{width: '50px', height: '25px', display: 'inline-block', marginTop: '5px', float: 'right'}} id="verify-img"></div>
+          <Input maxLength={10} ref={input => this.code = input} size="small" style={validateInputStyle} placeholder="验证码" />
+          <Button style={{float: 'right', marginTop: '5px', marginLeft: '10px'}} size="small" type="primary" onClick={this.submitForm.bind(this)}>提交</Button>
+          <Button style={{ float: 'right', marginTop: '5px', marginLeft: '10px' }} size="small" onClick={this.resetForm.bind(this)}>重置</Button>
+          <div style={{width: '60px', height: '25px', display: 'inline-block', marginTop: '5px', float: 'right'}} id="verify-img"></div>
         </div>
       </div>
     )
