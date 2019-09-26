@@ -19,7 +19,7 @@ class Join extends React.PureComponent<{}, {}, any> {
   code:any = {}
 
   state: any = {
-    gender: "先生",
+    gender: '',
     verifyCode: {},
     areaList: [],
   }
@@ -67,17 +67,15 @@ class Join extends React.PureComponent<{}, {}, any> {
   emptyCheck() {
     const name = this.name.state.value;
     const phone = this.phone.state.value;
-    const email = this.email.state.value;
     const code = this.code.state.value;
     const content = this.content.textAreaRef.value;
-    const company_name = this.company_name.state.value;
     const province = this.state.areaList[0];
     const city = this.state.areaList[1];
     const county = this.state.areaList[2];
 
 
-    if (!name || !phone || !email || !company_name || !content || !province || !city || !county) {
-      alert('请先填写信息')
+    if (!name || !phone || !content || !province || !city || !county) {
+      alert('请先补充信息后提交')
       return;
     }
 
@@ -150,7 +148,7 @@ class Join extends React.PureComponent<{}, {}, any> {
     this.content.textAreaRef.value = '';
     this.company_name.state.value = '';
     this.setState({
-      gender: '先生',
+      gender: '',
       areaList: [],
     })
   }
@@ -191,10 +189,10 @@ class Join extends React.PureComponent<{}, {}, any> {
     }
     return (
       <div className="container join-form-container_mobile">
-        <img className="banner max-width" src="/static/join/join-form_mobile.png"></img>
+        <img className="max-width" src="/static/join/join-form_mobile.png"></img>
         <p className="form-title">我要咨询 <span className="form-subtitle">（24小时内获得快速回复）</span> </p>
         <div>
-          <Input ref={input => this.name = input} style={inlineInputStyle} maxLength={20} placeholder="姓名" allowClear/>
+          <Input ref={input => this.name = input} style={inlineInputStyle} maxLength={5} placeholder="姓名" allowClear/>
           <Radio.Group style={inlineRadioGroup} onChange={this.onChangeSex.bind(this)} value={this.state.gender}>
             <Radio style={radioStyle} value="先生">先生</Radio>
             <Radio style={radioStyle} value="女士">女士</Radio>
@@ -202,7 +200,7 @@ class Join extends React.PureComponent<{}, {}, any> {
         </div>
         <Input ref={input => this.phone = input} style={inputStyle} placeholder="电话" type="tel" maxLength={11} allowClear/>
         <Input ref={input => this.email = input} style={inputStyle} maxLength={100} placeholder="邮箱" allowClear/>
-        <Input ref={input => this.company_name = input} style={inputStyle} maxLength={100} placeholder="公司名称" allowClear/>
+        <Input ref={input => this.company_name = input} style={inputStyle} maxLength={30} placeholder="公司名称" allowClear/>
         <AreaSelect level={2} type="text" size="small" defaultArea={[]} onChange={this.areaChange.bind(this)} data={pcaa}></AreaSelect>
         <Input.TextArea style={fullInputStyle}
           ref={input => this.content = input}
@@ -222,7 +220,72 @@ class Join extends React.PureComponent<{}, {}, any> {
   }
 
   pcForm = () => {
-    return <div>1111</div>
+    const radioStyle = {
+      display: 'inline-block',
+      height: '30px',
+      lineHeight: '30px',
+      width: '20px',
+      marginLeft: '10px',
+      marginRight: '30px',
+    };
+    const inlineInputStyle = {
+      display: 'inline-block',
+      width: '60%',
+      marginTop: '20px'
+    }
+
+    const inlineRadioGroup = {
+      display: 'inline-block',
+    }
+
+    const inputStyle = {
+      width: '60%',
+      marginTop: '20px'
+    }
+
+    const fullInputStyle = {
+      marginTop: '20px'
+    }
+
+    const validateInputStyle = {
+      display: 'inline-block',
+      marginTop: '20px',
+      marginLeft: '20px',
+      width: '80px'
+    }
+
+    return <div className="container join-form-container">
+      <div className="form-box">
+        <p className="form-title">我要咨询 <span className="form-subtitle">（24小时内获得快速回复）</span> </p>
+        <div>
+          <Input ref={input => this.name = input} style={inlineInputStyle} maxLength={20} placeholder="姓名" allowClear />
+          <Radio.Group style={inlineRadioGroup} onChange={this.onChangeSex.bind(this)} value={this.state.gender}>
+            <Radio style={radioStyle} value="先生">先生</Radio>
+            <Radio style={radioStyle} value="女士">女士</Radio>
+          </Radio.Group>
+        </div>
+        <Input ref={input => this.phone = input} style={inputStyle} placeholder="电话" type="tel" maxLength={11} allowClear />
+        <Input ref={input => this.email = input} style={inputStyle} maxLength={100} placeholder="邮箱" allowClear />
+        <Input ref={input => this.company_name = input} style={inputStyle} maxLength={100} placeholder="公司名称" allowClear />
+        <AreaSelect level={2} type="text" defaultArea={[]} onChange={this.areaChange.bind(this)} data={pcaa}></AreaSelect>
+        <Input.TextArea style={{ ...fullInputStyle, resize: 'none'}}
+          ref={input => this.content = input}
+          placeholder="您的建议"
+          maxLength={300}
+          autosize={{ minRows: 10 }}
+        />
+        <div className="">
+          <span>验证码</span>
+          <Input maxLength={10} ref={input => this.code = input} style={validateInputStyle} placeholder="验证码" />
+          <Button style={{ float: 'right', marginTop: '20px', marginLeft: '10px' }} type="primary" onClick={this.submitForm.bind(this)}>提交</Button>
+          <Button style={{ float: 'right', marginTop: '20px', marginLeft: '10px' }} onClick={this.resetForm.bind(this)}>重置</Button>
+          <div style={{ width: '100px', height: '30px', display: 'inline-block', marginLeft: '20px', marginTop: '20px', verticalAlign: 'bottom' }} id="verify-img"></div>
+        </div>
+      </div>
+      <div className="img-box">
+        <img className="banner max-width" src="/static/join/join-form.png"></img>
+      </div>
+    </div>
   }
 
   getForm = () => {
