@@ -136,7 +136,7 @@ class Index extends React.PureComponent<{}, {}, any> {
           <div className="container">
             <div className="news_detail-container">
               <div className="news_detail-left-box">
-                <p className="news_detail-list-title">小步动态</p>
+                <p className="news_detail-list-title">{this.state.typeTitle}</p>
                 <div className="news_detail-list">
                   {this.state.newsList[this.state.currentNewsPageIndex] && this.state.newsList[this.state.currentNewsPageIndex].map((item: any, index) => {
                     return <p className={classNames(['news_detail-list-item', { active: item.id == this.state.id }])} key={index} onClick={this.redirectNews.bind(this, item)}> {this.state.currentNewsPageIndex * this.state.limit + (index + 1)}、{item.title} </p>
