@@ -9,6 +9,8 @@ import { AreaSelect } from 'react-area-linkage';
 import HOST from '../../utils/api';
 
 const telRegx = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/
+const mailReg = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
 
 class Join extends React.PureComponent<{}, {}, any> {
   name:any = {}
@@ -66,6 +68,7 @@ class Join extends React.PureComponent<{}, {}, any> {
   emptyCheck() {
     const name = this.name.state.value;
     const phone = this.phone.state.value;
+    const email = this.email.state.value;
     const code = this.code.state.value;
     const content = this.content.textAreaRef.value;
     const province = this.state.areaList[0];
@@ -88,8 +91,13 @@ class Join extends React.PureComponent<{}, {}, any> {
       return;
     }
 
-    if (!telRegx.test(this.phone.state.value)) {
+    if (!telRegx.test(phone)) {
       alert('手机格式不正确')
+      return;
+    }
+
+    if (email && !mailReg.test(email)) {
+      alert('邮箱格式不正确')
       return;
     }
     return true;

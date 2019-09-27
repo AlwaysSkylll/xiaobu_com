@@ -2,16 +2,19 @@ import React from "react"
 import { Carousel } from 'antd';
 import classNames from 'classnames'
 import mobileDetect from 'ismobilejs'
+import HOST from '../../utils/api';
+import Router from 'next/router'
 
 class Index extends React.PureComponent<{}, {}, any> {
   state: any = {
     newsList: [
-      { img: '/static/home/manage.png', complains: ['1、真的能月入10万吗？5年创业投资人教你用投资思维选项目！', '2、打破传统教培模式，小步智学轻松招生过千人！', '3、加盟3个月，连开4家学习中心，招生80多人！这家店凭什么？'] },
-      { img: '/static/home/news2.png', complains: ['1、7天冲刺班，解决1学期的重难点知识！从80分到95分只要轻轻一跃！', '2、这家店暑假班“喜提”千人报名！全凭期末考有92%的学员提分！', '3、期末考逆袭，语数英全部提升20分！孩子哭了：原来我也可以这么优秀!'] },
-      { img: '/static/home/news3.png', complains: ['1、学有所获，100 % 落地实操的培训技能，小步智学第10期学管师培训回顾。', '2、快讯丨小步智学又双叒叕在这些地方开业啦！你知道吗？', '3、百舸争流——小步智学参加第76届中国教育装备展！'] },
+      { img: '/static/home/manage.png', title: '', news: ['1、真的能月入10万吗？5年创业投资人教你用投资思维选项目！', '2、打破传统教培模式，小步智学轻松招生过千人！', '3、加盟3个月，连开4家学习中心，招生80多人！这家店凭什么？'] },
+      { img: '/static/home/news2.png', title: '', news: ['1、7天冲刺班，解决1学期的重难点知识！从80分到95分只要轻轻一跃！', '2、这家店暑假班“喜提”千人报名！全凭期末考有92%的学员提分！', '3、期末考逆袭，语数英全部提升20分！孩子哭了：原来我也可以这么优秀!'] },
+      { img: '/static/home/news3.png', title: '', news: ['1、学有所获，100 % 落地实操的培训技能，小步智学第10期学管师培训回顾。', '2、快讯丨小步智学又双叒叕在这些地方开业啦！你知道吗？', '3、百舸争流——小步智学参加第76届中国教育装备展！'] },
     ],
     newsIndex: 0,
     isMobile: false,
+    bannerList: [],
   }
 
   onChange(currentSlide: number) {
@@ -19,6 +22,38 @@ class Index extends React.PureComponent<{}, {}, any> {
   }
 
   componentDidMount() {
+    window.fetch(`${HOST}/api/banner?type=index`, {
+      method: 'GET',
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      if (data.length) {
+        this.setState({
+          bannerList: data
+        })
+        return;
+      }
+      console.error(data.msg)
+    }, (error) => {
+      console.error('获取轮播图失败', error)
+    })
+
+    window.fetch(`${HOST}/api/index/news`, {
+      method: 'GET',
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      if (data) {
+        this.setState({
+          newsList: [data.store_operation, data.case, data.activity]
+        })
+        return;
+      }
+      console.error(data.msg)
+    }, (error) => {
+      console.error('获取轮播图失败', error)
+    })
+
     this.setState({
       isMobile: mobileDetect(window.navigator.userAgent).any
     })
@@ -40,9 +75,15 @@ class Index extends React.PureComponent<{}, {}, any> {
           {
             this.state.isMobile ? '' :
               (<Carousel autoplay afterChange={this.onChange.bind(this)}>
-                <img className="banner" src="/static/home/banner1.png"></img>
+                {this.state.bannerList.map((item, index) => {
+                  return <img key={index} className="banner" src={item.img} onClick={() => {
+                    if (item.link) window.open(item.link)
+                  }}></img>
+                })}
+
+                {/* <img className="banner" src="/static/home/banner1.png"></img>
                 <img className="banner" src="/static/home/banner2.png"></img>
-                <img className="banner" src="/static/home/banner3.png"></img>
+                <img className="banner" src="/static/home/banner3.png"></img> */}
               </Carousel>)
           }
           <div className="container">
@@ -56,7 +97,7 @@ class Index extends React.PureComponent<{}, {}, any> {
             <img className="img_service img_news" src="/static/home/news.png" alt=""/>
             <div className="news-list wow bounceIn" >
               <div className="left-box">
-                {['门店管理', '学管师案例', '小步动态'].map((item, index) => {
+                {this.state.newsList.map(item => item.title).map((item, index) => {
                   return (
                     <div key={index} className={classNames('item', { active: index === this.state.newsIndex })} onClick={() => { this.setState({ newsIndex: index }) }}>{item}</div>
                   )
@@ -64,8 +105,8 @@ class Index extends React.PureComponent<{}, {}, any> {
               </div>
               <div className="right-box">
                 <img className="right-img" src={this.state.newsList[this.state.newsIndex].img} alt="" />
-                {this.state.newsList[this.state.newsIndex].complains.map((item, index) => {
-                  return (<p className="complain" key={index}>{item}</p>)
+                {this.state.newsList[this.state.newsIndex].news.map((item, index) => {
+                  return (<p className="complain" key={index} onClick={() => { if (item.link) window.open(item.link); else Router.push(`/join?id=${item.id}`)}}>{index + 1}、{item.title}</p>)
                 })}
               </div>
             </div>
