@@ -68,6 +68,16 @@ class Index extends React.PureComponent<{}, {}, any> {
 
   }
 
+  redirectNews(item) {
+    if (item.link) {
+      window.open(item.link)
+      return
+    }
+    Router.push(`/news_detail?id=${item.id}&type_title=${item.type_title}`)
+    document.documentElement.scrollTop = document.body.scrollTop = 0
+  }
+
+
   public render() {
     return (
       <div>
@@ -106,7 +116,7 @@ class Index extends React.PureComponent<{}, {}, any> {
               <div className="right-box">
                 <img className="right-img" src={this.state.newsList[this.state.newsIndex].img} alt="" />
                 {this.state.newsList[this.state.newsIndex].news.map((item, index) => {
-                  return (<p className="complain" key={index} onClick={() => { if (item.link) window.open(item.link); else Router.push(`/join?id=${item.id}`)}}>{index + 1}、{item.title}</p>)
+                  return (<p className="complain" key={index} onClick={this.redirectNews.bind(this, item)}>{index + 1}、{item.title}</p>)
                 })}
               </div>
             </div>
