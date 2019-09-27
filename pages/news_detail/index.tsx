@@ -15,7 +15,7 @@ class Index extends React.PureComponent<{}, {}, any> {
     newsDetail: {},
     newsNext: {},
     newsPrev: {},
-    limit: 1,
+    limit: 20,
   }
 
   onChange(currentSlide: number) {
