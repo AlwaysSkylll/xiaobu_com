@@ -10,6 +10,8 @@ import store from '@/store'
 import 'babel-polyfill'
 import { Affix, Input, Button } from 'antd';
 import HOST from '@/utils/api';
+import mobileDetect from 'ismobilejs'
+
 const telRegx = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/
 
 
@@ -30,7 +32,9 @@ class Layout extends React.Component {
 
   componentDidMount() {
     require('whatwg-fetch')
-
+    this.setState({
+      isMobile: mobileDetect(window.navigator.userAgent).any,
+    })
     const currentPath = Router && Router.router && Router.router.asPath
     if (currentPath === this.state.currentPath) return
     currentPath && (this.setState({ currentPath }))
@@ -98,7 +102,23 @@ class Layout extends React.Component {
 
   render () {
     const { children } = this.props
-    const { navItems, currentPath } = this.state
+    const { navItems, currentPath, isMobile } = this.state
+    let navBgImgName = ''
+    console.log(currentPath)
+    if (currentPath.includes('/product')) {
+      navBgImgName = 'product';
+    } else if (currentPath.includes('/about')) {
+      navBgImgName = 'about';
+    } else if (currentPath.includes('/join')) {
+      navBgImgName = 'join';
+    } else if (currentPath.includes('/index') || currentPath.includes('/')) {
+      navBgImgName = 'home';
+    } else {
+      navBgImgName = 'home';
+    }
+    const navBg = isMobile ? {
+      backgroundImage: `url('/static/${navBgImgName}/${navBgImgName}_top.png')`
+    }: {}
 
     return (<div className={classNames(style.layout, {active: this.state.isLoaded})}>
       <Head>
@@ -109,7 +129,7 @@ class Layout extends React.Component {
         <link rel="stylesheet" href="/static/animate.min.css" />
         <script src="/static/echarts.min.js" defer></script>
       </Head>
-      <nav className="nav-container">
+      <nav className="nav-container" style={navBg}>
         <div className="container">
           <img className="nav-logo" src="/static/home/logo.png"></img>
           <div className="nav-menu">

@@ -37,9 +37,9 @@ class Index extends React.PureComponent<{}, {}, any> {
           currentNewsPageIndex: pageNoIndex,
           newsLoadFinish: data.paging.total <= (offset + data.data.length)
         })
-      } else {
-        console.error(data.msg)
+        return
       }
+      console.error(data.msg)
     }, (error) => {
       console.error(error)
     })
@@ -69,11 +69,14 @@ class Index extends React.PureComponent<{}, {}, any> {
     }).then((response) => {
       return response.json();
     }).then((data) => {
-      this.setState({
-        newsDetail: data.data,
-        newsNext: data.next,
-        newsPrev: data.prve,
-      })
+      if (data) {
+        this.setState({
+          newsDetail: data.data,
+          newsNext: data.next,
+          newsPrev: data.prve,
+        })
+        return
+      }
       console.error(data.msg)
     }, (error) => {
       console.error(error)

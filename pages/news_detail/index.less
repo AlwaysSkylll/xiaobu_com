@@ -7,6 +7,9 @@
     margin-top: 100px;
     margin-bottom: 100px;
     color: #333333;
+    @media screen and (max-width: @sizes[tablet]) {
+      flex-direction: column-reverse;
+    }
   }
   &-title {
     text-align: center;
@@ -15,16 +18,26 @@
     max-width: 70%;
     margin: auto;
     color: black;
+    @media screen and (max-width: @sizes[tablet]) {
+      max-width: 70%;
+      font-size: vw(28);
+    }
   }
   &-time {
     font-size: 12px;
     text-align: center;
+    @media screen and (max-width: @sizes[tablet]) {
+      font-size: vw(12);
+    }
   }
   &-body {
     margin-top: 30px;
     line-height: 1.8;
     img {
       max-width: 100%;
+      @media screen and (max-width: @sizes[tablet]) {
+        margin-top: vw(30);
+      }
     }
   }
   &-footer {
@@ -32,6 +45,10 @@
     cursor: pointer;
     .news_detail-back {
       float: right;
+      @media screen and (max-width: @sizes[tablet]) {
+        float: initial;
+        text-align: right;
+      }
       img {
         width: 30px;
         margin-right: 10px;
@@ -43,14 +60,30 @@
         color: @color-primary;
       }
     }
+    @media screen and (max-width: @sizes[tablet]) {
+      margin-top: vw(100);
+      .news_detail-back {
+        img {
+          width: vw(30);
+          margin-right: vw(10);
+        }
+      }
+    }
   }
   &-footer-list {
     float: left;
+    @media screen and (max-width: @sizes[tablet]) {
+      float: initial;
+    }
   }
   &-left-box {
     text-align: left;
     width: 200px;
     margin-right: 40px;
+    @media screen and (max-width: @sizes[tablet]) {
+      width: 100%;
+      margin-right: 0;
+    }
   }
   &-right-box {
     flex: 1;
@@ -85,11 +118,22 @@
       left: 0;
       background: @color-primary;
     }
+
+    @media screen and (max-width: @sizes[tablet]) {
+      padding-left: vw(10);
+      padding-bottom: vw(10);
+      font-size: vw(16);
+      line-height: vw(16);
+    }
   }
   &-list_footer {
     margin-top: 30px;
     text-align: center;
     line-height: 16px;
+    @media screen and (max-width: @sizes[tablet]) {
+      margin-top: vw(30);
+      line-height: vw(16);
+    }
   }
 }
 
