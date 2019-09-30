@@ -144,7 +144,7 @@ class Product extends React.PureComponent<{}, {}, any> {
             <img style={{ height: '180px', zIndex: 5, position: 'relative' }} src="/static/product/online.png" alt="" />
             <div className="online-system wow fadeIn">
               <div className="online-system_left">
-                <Carousel ref={this.setCarouselRef} dots={false} dotPosition="left">
+                <Carousel autoplay ref={this.setCarouselRef} afterChange={this.handleChange.bind(this)} dots={false} dotPosition="left">
                   {this.state.onlineSystem.map((item: any, index: number) => {
                     return (<img key={index} src={item.img} alt=""/>)
                   })}
