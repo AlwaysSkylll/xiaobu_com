@@ -127,7 +127,7 @@ class Layout extends React.Component {
         <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,maximum-scale=2" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
         <link rel="stylesheet" href="/static/animate.min.css" />
-        <script src="/static/echarts.min.js" defer></script>
+        <script src="/static/echarts.min.js"></script>
       </Head>
       <nav className="nav-container" style={navBg}>
         <div className="container">
@@ -200,9 +200,9 @@ class Layout extends React.Component {
         </Affix>
         <div className="container">
           <div className="footer-list">
-            <p className="title">首页</p>
+            <p className="title" onClick={this.to.bind(this, 'index')}>首页</p>
           </div>
-          <div className="footer-list">
+          <div className="footer-list" onClick={this.to.bind(this, 'product')}>
             <p className="title">产品介绍</p>
             <p className="item">线上学习系统</p>
             <p className="item">五级闯关制</p>
@@ -210,7 +210,7 @@ class Layout extends React.Component {
             <p className="item">线下学习中心</p>
             <p className="item">学管师角色</p>
           </div>
-          <div className="footer-list">
+          <div className="footer-list" onClick={this.to.bind(this, 'join')}>
             <p className="title">招商加盟</p>
             <p className="item">我们的优势</p>
             <p className="item">门店采访</p>
@@ -219,7 +219,7 @@ class Layout extends React.Component {
             <p className="item">加盟店分布图</p>
             <p className="item">咨询留言</p>
           </div>
-          <div className="footer-list">
+          <div className="footer-list" onClick={this.to.bind(this, 'about')}>
             <p className="title">联系我们</p>
             <p className="item">公司介绍</p>
             <p className="item">团队介绍</p>

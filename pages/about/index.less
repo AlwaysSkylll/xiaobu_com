@@ -1,4 +1,5 @@
-@import '../../public/variable.less';
+@plugin "../../public/plugins/index";
+@import (reference) '../../public/variable.less';
 
 .about-container {
   .offset-top-90 {
@@ -51,6 +52,144 @@
     }
     .flex-1 {
       flex: 1;
+    }
+  }
+}
+
+
+@media screen and (max-width: @sizes[tablet]) {
+  .about-container {
+    .introduce {
+      position: relative;
+      overflow: hidden;
+    }
+    .introduce .fr+.context {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .margin-auto {
+      margin: auto !important;
+      margin-top: vw(10) !important;
+    }
+    .width-80 {
+      width: 60% !important;
+    }
+    .thumb-sky {
+      width: 100%;
+      margin-top: 0;
+      border-bottom: vw(10) solid @color-primary;
+    }
+    .thumb-leader {
+      position: relative;
+      z-index: 20;
+      width: vw(233);
+      margin-top: vw(20);
+      margin-left: vw(20);
+
+      background: white;
+      img {
+        width: 100%;
+      }
+    }
+    .introduce-leader {
+      padding-bottom: vw(160);
+    }
+
+    .context-leader {
+      background: white;
+      .name {
+        color: white;
+        z-index: 30;
+      }
+      .reward {
+        color: white;
+        z-index: 30;
+      }
+      .detail {
+        position: absolute;
+        top: vw(80);
+        right: vw(20);
+        left: vw(60);
+        padding-top: vw(270) !important;
+        background: @color-primary;
+        color: white;
+      }
+    }
+    .introduce .thumb img {
+      width: 100%;
+      height: vw(150);
+      object-fit: cover;
+    }
+    .introduce .context {
+      height: auto;
+      background: white;
+    }
+    .introduce .context .detail {
+      padding-top: vw(20);
+    }
+    .offset-top-90 {
+      top: vw(90);
+    }
+
+    .offset-bottom-90 {
+      bottom: vw(90);
+    }
+
+    .container {
+    }
+
+    .banner {
+      height: vw(600);
+    }
+
+    .gray-empty-block {
+      height: vw(180);
+    }
+
+    .title-img {
+      position: relative;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      z-index: 12;
+      height: vw(70);
+    }
+
+    .contact-box {
+      flex-direction: column;
+      align-items: baseline;
+      .contact-box_row{
+        width: 100%;
+        display: flex;
+      }
+      .contact-box_column {
+        flex-direction: row;
+      }
+      &_item {
+        margin: 0;
+        margin-top: vw(15);
+
+        .medium-img {
+          width: vw(94);
+        }
+
+        .small-img {
+          width: vw(37);
+          margin: vw(10) auto;
+        }
+
+        .big-img {
+          width: vw(173);
+        }
+      }
+
+      &_text {
+        font-size: vw(12);
+        margin-top: vw(15);
+      }
+
+      .flex-1 {
+      }
     }
   }
 }

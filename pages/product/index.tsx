@@ -102,7 +102,6 @@ class Product extends React.PureComponent<{}, {}, any> {
 
     myChart.on('mouseover', (params) => {
       params.event.event.stopPropagation();
-      console.log(params.event)
       const index = params.dataIndex
       optionData[index].label.rich.b.fontSize = 28
       optionData[index].label.rich.b.color = '#00a7e1'
@@ -115,7 +114,6 @@ class Product extends React.PureComponent<{}, {}, any> {
 
     myChart.on('mouseout', (params) => {
       params.event.event.stopPropagation();
-      console.log(params.event)
       const index = params.dataIndex
       optionData[index].label.rich.b.fontSize = originOptionData[index].label.rich.b.fontSize
       optionData[index].label.rich.b.color = originOptionData[index].label.rich.b.color
@@ -124,7 +122,6 @@ class Product extends React.PureComponent<{}, {}, any> {
       optionData[index].selected = false
       myChart.setOption(option, true);
     })
-
   }
 
   public render() {
@@ -188,7 +185,7 @@ class Product extends React.PureComponent<{}, {}, any> {
           </div>
         </div>
         <div className="index-container about-container pb-100" style={{ marginTop: this.state.isMobile ? '-20px' : '-50px' }}>
-          <img className="banner product_img-mid-banner" src="/static/product/middle_banner.png" alt="" />
+          <img className="banner product_img-mid-banner" src="/static/product/middle_banner.png" alt=""/>
           {this.state.isMobile ? <div className="product-qinghua_context">
             <p className="producti-qinghua_line">首创以“清华北大”</p>
             <p className="producti-qinghua_line">为最高目标的五级闯关制度。</p>

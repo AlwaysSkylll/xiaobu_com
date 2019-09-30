@@ -58,6 +58,13 @@ class Index extends React.PureComponent<{}, {}, any> {
       isMobile: mobileDetect(window.navigator.userAgent).any
     })
 
+    setInterval(() => {
+      this.setState({
+        newsIndex: this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1)
+      })
+      console.log(this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1))
+    }, 2500)
+
     const { WOW } = require('wowjs')
     const wow = new WOW({
       offset: 10,
