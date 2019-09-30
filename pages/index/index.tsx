@@ -6,6 +6,8 @@ import HOST from '../../utils/api';
 import Router from 'next/router'
 
 class Index extends React.PureComponent<{}, {}, any> {
+  intervalId:any = 0
+
   state: any = {
     newsList: [
       { img: '/static/home/manage.png', title: '', news: ['1、真的能月入10万吗？5年创业投资人教你用投资思维选项目！', '2、打破传统教培模式，小步智学轻松招生过千人！', '3、加盟3个月，连开4家学习中心，招生80多人！这家店凭什么？'] },
@@ -18,7 +20,7 @@ class Index extends React.PureComponent<{}, {}, any> {
   }
 
   onChange(currentSlide: number) {
-    console.log(currentSlide);
+    console.log(currentSlide, 89999);
   }
 
   componentDidMount() {
@@ -55,15 +57,15 @@ class Index extends React.PureComponent<{}, {}, any> {
     })
 
     this.setState({
-      isMobile: mobileDetect(window.navigator.userAgent).any
+      isMobile: mobileDetect(window.navigator.userAgent).any,
     })
 
-    setInterval(() => {
-      this.setState({
-        newsIndex: this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1)
-      })
-      console.log(this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1))
-    }, 2500)
+    // this.intervalId = setInterval(() => {
+    //   this.setState({
+    //     newsIndex: this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1)
+    //   })
+    //   console.log(this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1))
+    // }, 2500)
 
     const { WOW } = require('wowjs')
     const wow = new WOW({
@@ -73,6 +75,10 @@ class Index extends React.PureComponent<{}, {}, any> {
     })
     wow && wow.init();
 
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId)
   }
 
   redirectNews(item) {
@@ -89,20 +95,13 @@ class Index extends React.PureComponent<{}, {}, any> {
     return (
       <div>
         <div className="index-container pb-100">
-          {
-            this.state.isMobile ? '' :
-              (<Carousel autoplay afterChange={this.onChange.bind(this)}>
-                {this.state.bannerList.map((item, index) => {
-                  return <img key={index} className="banner" src={item.img} onClick={() => {
-                    if (item.link) window.open(item.link)
-                  }}></img>
-                })}
-
-                {/* <img className="banner" src="/static/home/banner1.png"></img>
-                <img className="banner" src="/static/home/banner2.png"></img>
-                <img className="banner" src="/static/home/banner3.png"></img> */}
-              </Carousel>)
-          }
+          {this.state.isMobile ? '' : (<Carousel autoplay={true} afterChange={this.onChange.bind(this)}>
+            {this.state.bannerList.map((item, index) => {
+              return <img key={index} className="banner" src={item.img} onClick={() => {
+                if (item.link) window.open(item.link)
+              }}></img>
+            })}
+          </Carousel>)}
           <div className="container">
             <p className="title">教培升级，我选小步智学！</p>
             <img className="icon-vs" src="/static/home/VS@2x.png" alt="" />
