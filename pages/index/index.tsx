@@ -6,6 +6,8 @@ import HOST from '../../utils/api';
 import Router from 'next/router'
 
 class Index extends React.PureComponent<{}, {}, any> {
+  carouselRef: any = null
+  setCarouselRef: any = null
   state: any = {
     newsList: [
       { img: '/static/home/manage.png', title: '', news: ['1、真的能月入10万吗？5年创业投资人教你用投资思维选项目！', '2、打破传统教培模式，小步智学轻松招生过千人！', '3、加盟3个月，连开4家学习中心，招生80多人！这家店凭什么？'] },
@@ -17,8 +19,23 @@ class Index extends React.PureComponent<{}, {}, any> {
     bannerList: [],
   }
 
+  constructor(props: any) {
+    super(props)
+    this.setCarouselRef = (el: any) => {
+      this.carouselRef = el
+    }
+  }
+
   onChange(currentSlide: number) {
     console.log(currentSlide, 89999);
+  }
+
+  handleChange(index: number) {
+    console.log(index, 888)
+    if (this.carouselRef) {
+      this.carouselRef.goTo(index)
+    }
+    this.setState({ newsIndex: index })
   }
 
   componentDidMount() {
@@ -108,16 +125,29 @@ class Index extends React.PureComponent<{}, {}, any> {
               <div className="left-box">
                 {this.state.newsList.map(item => item.title).map((item, index) => {
                   return (
-                    <div key={index} className={classNames('item', { active: index === this.state.newsIndex })} onClick={() => { this.setState({ newsIndex: index }) }}>{item}</div>
+                    <div key={index} className={classNames('item', { active: index === this.state.newsIndex })} onClick={this.handleChange.bind(this, index)}>{item}</div>
                   )
                 })}
               </div>
               <div className="right-box">
-                <img className="right-img" src={this.state.newsList[this.state.newsIndex].img} alt="" />
-                {this.state.newsList[this.state.newsIndex].news.map((item, index) => {
-                  return (<p className="complain" key={index} onClick={this.redirectNews.bind(this, item)}>{index + 1}、{item.title}</p>)
-                })}
-                <span style={{ float: 'right', position: 'relative', fontSize: this.state.isMobile ? '12px' : '16px', top: this.state.isMobile ? '-16px' : '-24px', color: '#00a7e1' }}>（点击标题，查看更多）</span>
+                {this.state.isMobile ?
+                [
+                  <img className="right-img" src={this.state.newsList[this.state.newsIndex].img} alt="" />,
+                  this.state.newsList[this.state.newsIndex].news.map((item, index) => {
+                    return (<p className="complain" key={index} onClick={this.redirectNews.bind(this, item)}>{index + 1}、{item.title}</p>)
+                  }),
+                  <span style={{ float: 'right', position: 'relative', fontSize: this.state.isMobile ? '12px' : '16px', top: this.state.isMobile ? '-16px' : '-24px', color: '#00a7e1' }}>（点击标题，查看更多）</span>
+                  ] : <Carousel ref={this.setCarouselRef} autoplay={true} afterChange={this.handleChange.bind(this)} dots={false} dotPosition="left">
+                  {this.state.newsList.map((item, index) => {
+                    return <div key={index} style={{width: '840px', height: '415px'}}>
+                      <img className="right-img" src={item.img} alt="" />
+                      {item.news.map((itemNews, indexNews) => {
+                        return <p className="complain" key={indexNews} onClick={this.redirectNews.bind(this, itemNews)}>{indexNews + 1}、{itemNews.title}</p>
+                      })}
+                      <span style={{ float: 'right', position: 'relative', fontSize: this.state.isMobile ? '12px' : '16px', top: this.state.isMobile ? '-16px' : '-24px', color: '#00a7e1' }}>（点击标题，查看更多）</span>
+                    </div>
+                  })}
+                </Carousel>}
               </div>
             </div>
             <img className="img_service" src="/static/home/service.png" alt=""/>
