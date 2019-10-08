@@ -6,8 +6,6 @@ import HOST from '../../utils/api';
 import Router from 'next/router'
 
 class Index extends React.PureComponent<{}, {}, any> {
-  intervalId:any = 0
-
   state: any = {
     newsList: [
       { img: '/static/home/manage.png', title: '', news: ['1、真的能月入10万吗？5年创业投资人教你用投资思维选项目！', '2、打破传统教培模式，小步智学轻松招生过千人！', '3、加盟3个月，连开4家学习中心，招生80多人！这家店凭什么？'] },
@@ -59,14 +57,6 @@ class Index extends React.PureComponent<{}, {}, any> {
     this.setState({
       isMobile: mobileDetect(window.navigator.userAgent).any,
     })
-    // setTimeout(() => {
-    //   this.intervalId = setInterval(() => {
-    //     this.setState({
-    //       newsIndex: this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1)
-    //     })
-    //     console.log(this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1))
-    //   }, 2500)
-    // }, 10000)
 
     const { WOW } = require('wowjs')
     const wow = new WOW({
@@ -79,7 +69,7 @@ class Index extends React.PureComponent<{}, {}, any> {
   }
 
   componentWillUnmount() {
-    clearInterval(this.intervalId)
+
   }
 
   redirectNews(item) {
@@ -127,6 +117,7 @@ class Index extends React.PureComponent<{}, {}, any> {
                 {this.state.newsList[this.state.newsIndex].news.map((item, index) => {
                   return (<p className="complain" key={index} onClick={this.redirectNews.bind(this, item)}>{index + 1}、{item.title}</p>)
                 })}
+                <span style={{ float: 'right', position: 'relative', fontSize: this.state.isMobile ? '12px' : '16px', top: this.state.isMobile ? '-16px' : '-24px', color: '#00a7e1' }}>（点击标题，查看更多）</span>
               </div>
             </div>
             <img className="img_service" src="/static/home/service.png" alt=""/>
