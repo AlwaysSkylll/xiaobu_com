@@ -3,6 +3,7 @@ import { Carousel } from 'antd'
 import classNames from 'classnames'
 import { optionData } from '@/utils/echart-data.js'
 import mobileDetect from 'ismobilejs'
+import HOST from '../../utils/api';
 
 const hoverdIcon = [
   '/static/product/hover_tv.png',
@@ -30,6 +31,7 @@ class Product extends React.PureComponent<{}, {}, any> {
       { img: '/static/product/material.jpg', title: '适用教材', desc: '已覆盖全国大部分教材', add: '（包含教材知识点的各类题型题库和错题解析视频）' },
       { img: '/static/product/time.jpg', title: '学习时间', desc: '每天30-40分钟高效学习', add: '（效率提升3-5倍）' }
     ],
+    bannerList: [],
     onlineSystemIndex: 0,
     hoverText: [
       '精准查漏补缺，专项补齐知识短板，真正做到哪里不会学哪里',
@@ -53,6 +55,22 @@ class Product extends React.PureComponent<{}, {}, any> {
   }
 
   componentDidMount() {
+    window.fetch(`${HOST}/api/banner?type=product`, {
+      method: 'GET',
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      if (data.length) {
+        this.setState({
+          bannerList: data
+        })
+        return;
+      }
+      console.error(data.msg)
+    }, (error) => {
+      console.error('获取轮播图失败', error)
+    })
+
     this.setState({
       isMobile: mobileDetect(window.navigator.userAgent).any
     })
@@ -128,13 +146,20 @@ class Product extends React.PureComponent<{}, {}, any> {
     return (
       <div>
         {this.state.isMobile ? '' : <div className="index-container about-container">
-          <Carousel autoplay afterChange={this.onChange.bind(this)}>
+          {<Carousel autoplay={true} afterChange={this.onChange.bind(this)}>
+            {this.state.bannerList.map((item, index) => {
+              return <img key={index} className="banner" src={item.img} onClick={() => {
+                if (item.link) window.open(item.link)
+              }}></img>
+            })}
+          </Carousel>}
+          {/* <Carousel autoplay afterChange={this.onChange.bind(this)}>
             <img className="banner" src="/static/product/banner1.png"></img>
             <img className="banner" src="/static/product/banner2.png"></img>
             <img className="banner" src="/static/product/banner3.png"></img>
             <img className="banner" src="/static/product/banner4.png"></img>
             <img className="banner" src="/static/product/banner5.png"></img>
-          </Carousel>
+          </Carousel> */}
           <div style={{height: '550px'}} className="gray-empty-block bg-gray">
           </div>
         </div>}

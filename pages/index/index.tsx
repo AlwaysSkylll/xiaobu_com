@@ -59,13 +59,14 @@ class Index extends React.PureComponent<{}, {}, any> {
     this.setState({
       isMobile: mobileDetect(window.navigator.userAgent).any,
     })
-
-    this.intervalId = setInterval(() => {
-      this.setState({
-        newsIndex: this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1)
-      })
-      console.log(this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1))
-    }, 2500)
+    // setTimeout(() => {
+    //   this.intervalId = setInterval(() => {
+    //     this.setState({
+    //       newsIndex: this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1)
+    //     })
+    //     console.log(this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1))
+    //   }, 2500)
+    // }, 10000)
 
     const { WOW } = require('wowjs')
     const wow = new WOW({
@@ -95,13 +96,15 @@ class Index extends React.PureComponent<{}, {}, any> {
     return (
       <div>
         <div className="index-container pb-100">
-          {this.state.isMobile ? '' : (<Carousel autoplay={true} afterChange={this.onChange.bind(this)}>
-            {this.state.bannerList.map((item, index) => {
-              return <img key={index} className="banner" src={item.img} onClick={() => {
-                if (item.link) window.open(item.link)
-              }}></img>
-            })}
-          </Carousel>)}
+          {this.state.isMobile ? '' : <div>
+            <Carousel autoplay={true} afterChange={this.onChange.bind(this)}>
+              {this.state.bannerList.map((item, index) => {
+                return <img key={index} className="banner" src={item.img} onClick={() => {
+                  if (item.link) window.open(item.link)
+                }}></img>
+              })}
+            </Carousel>
+          </div>}
           <div className="container">
             <p className="title">教培升级，我选小步智学！</p>
             <img className="icon-vs" src="/static/home/VS@2x.png" alt="" />

@@ -24,6 +24,7 @@ class Join extends React.PureComponent<{}, {}, any> {
     gender: '',
     verifyCode: {},
     areaList: [],
+    bannerList: [],
   }
 
   onChange(currentSlide: number) {
@@ -31,6 +32,23 @@ class Join extends React.PureComponent<{}, {}, any> {
   }
 
   componentDidMount() {
+    window.fetch(`${HOST}/api/banner?type=join`, {
+      method: 'GET',
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      if (data.length) {
+        this.setState({
+          bannerList: data
+        })
+        return;
+      }
+      console.error(data.msg)
+    }, (error) => {
+      console.error('获取轮播图失败', error)
+    })
+
+
     require('../../static/gvertify.js')
     this.setState({
       isMobile: mobileDetect(window.navigator.userAgent).any,
@@ -304,9 +322,16 @@ class Join extends React.PureComponent<{}, {}, any> {
     return (
       <div>
         {this.state.isMobile ? '' : <div className="index-container about-container">
-          <Carousel afterChange={this.onChange.bind(this)}>
-            <img className="banner" src="/static/join/banner.png"></img>
+          <Carousel autoplay={true} afterChange={this.onChange.bind(this)}>
+            {this.state.bannerList.map((item, index) => {
+              return <img key={index} className="banner" src={item.img} onClick={() => {
+                if (item.link) window.open(item.link)
+              }}></img>
+            })}
           </Carousel>
+          {/* <Carousel afterChange={this.onChange.bind(this)}>
+            <img className="banner" src="/static/join/banner.png"></img>
+          </Carousel> */}
           <div className="gray-empty-block bg-gray"></div>
         </div>}
 
