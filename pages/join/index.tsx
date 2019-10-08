@@ -312,6 +312,7 @@ class Join extends React.PureComponent<{}, {}, any> {
 
         <div className={classNames(['about-container', 'index-container', { 'pb-100': !this.state.isMobile }, { 'bg-gray': this.state.isMobile }])}>
           <div className="container">
+            <a id="advance"></a>
             <img className="advance_detail max-width" src={this.state.isMobile ? '/static/join/advance_detail_mobile.png' : '/static/join/advance_detail.png'} alt="" />
           </div>
         </div>
@@ -323,6 +324,7 @@ class Join extends React.PureComponent<{}, {}, any> {
               {/* <video controls src="http://dl.xueleyun.com/files/219c434ae9a8336457afa546d3489a80.mp4" poster="/static/join/video_poster.jpg"></video> */}
               <video controls src="http://dl.xueleyun.com/files/219c434ae9a8336457afa546d3489a80.mp4" />
             </div>
+            <a id="store"></a>
             <img className="join-img mt-50" src="/static/join/store.png" alt="" />
             <p className="join-profit-context">我们的门店从几十平到几百平不等，但麻雀虽小，五脏俱全。<br />我们的门店从学校周边民用住宅到市中心街道，甚至还有集装箱改装，{this.state.isMobile ? '' : <br />}形式多样，功能齐全。</p>
 
@@ -331,6 +333,7 @@ class Join extends React.PureComponent<{}, {}, any> {
             <Carousel afterChange={this.onChange.bind(this)}>
               <img className="banner" src="/static/join/banner_middle.png"></img>
             </Carousel>}
+          <a id="examples"></a>
           <div className="container">
             <img style={{ width: '100%' }} src={this.state.isMobile ? '/static/join/great_shoper_mobile.png' : '/static/join/great_shoper.png'}></img>
           </div>
@@ -338,6 +341,7 @@ class Join extends React.PureComponent<{}, {}, any> {
 
         <div className={classNames(['about-container', 'index-container', 'pb-100', { 'bg-gray': this.state.isMobile }])} style={{ marginTop: '-70px' }}>
           <div className="container">
+            <a id="support"></a>
             <img className="join-img" src={this.state.isMobile ? '/static/join/support_mobile.png' : '/static/join/support.png'} alt="" />
             <p className="join-support-context">没做过教育，没经验，没关系！<br />我们帮你，一站式无忧加盟服务支持。</p>
             <img style={{ width: '100%' }} src={this.state.isMobile ? require('/static/join/support_detail_mobile.png') : require('/static/join/support_detail.png')} alt="" />
@@ -347,10 +351,12 @@ class Join extends React.PureComponent<{}, {}, any> {
 
         <div className="about-container bg-gray index-container pt-100 pb-100">
           <div className={classNames([{ 'container': !this.state.isMobile }])}>
+            <a id="map"></a>
+
             <img style={{ width: '100%' }} src="/static/join/store_map.png" alt="" />
           </div>
         </div>
-
+        <a id="advice"></a>
         <Form></Form>
       </div>
     )

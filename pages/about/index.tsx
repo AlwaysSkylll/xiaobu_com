@@ -41,6 +41,7 @@ class About extends React.PureComponent<{}, {}, any> {
 
       <div className="about-container index-container pb-100">
         <div className="container pb-50">
+          <a id="company"></a>
 
           <div className="introduce">
             <div className="thumb fl"><img style={{ width: '620px' }} src="/static/about/sky.png" alt="" /></div>
@@ -49,8 +50,12 @@ class About extends React.PureComponent<{}, {}, any> {
             </div>
           </div>
 
+          <a id="team"></a>
+
           <img className="title-img" src="/static/about/team.png" alt="" />
           <div className="introduce">
+            <a id="people"></a>
+
             <div className="thumb fr"><img style={{ marginRight: '80px' }} src="/static/about/chen.jpg" alt="" /></div>
             <div className="context bg-gray">
               <p className="name text-left wow bounceInLeft" style={{ color: '#585858' }}>陈冬华</p>
@@ -69,6 +74,8 @@ class About extends React.PureComponent<{}, {}, any> {
       </div>
 
       <div className="about-container index-container bg-gray pt-100 pb-100">
+        <a id="people"></a>
+
         <div className="container">
           <img style={{ width: '100%' }} src="/static/about/donator.png" alt="" />
         </div>
@@ -76,7 +83,9 @@ class About extends React.PureComponent<{}, {}, any> {
 
       <div className="about-container index-container pb-100">
         <div className="container">
+          <a id="contact"></a>
           <img className="title-img " src="/static/about/contact.png" alt="" />
+
           <div className="contact-box">
             <div className="contact-box_column">
               <div className="contact-box_item flex-1">

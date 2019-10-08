@@ -1,7 +1,7 @@
 import React from "react"
 import { Carousel } from 'antd'
 import classNames from 'classnames'
-import {optionData} from '@/utils/echart-data.js'
+import { optionData } from '@/utils/echart-data.js'
 import mobileDetect from 'ismobilejs'
 
 const hoverdIcon = [
@@ -141,6 +141,7 @@ class Product extends React.PureComponent<{}, {}, any> {
 
         {this.state.isMobile ? '' : <div className="index-container about-container">
           <div className="container" style={{marginTop: '-480px'}}>
+            <a id="online"></a>
             <img style={{ height: '180px', zIndex: 5, position: 'relative' }} src="/static/product/online.png" alt="" />
             <div className="online-system wow fadeIn">
               <div className="online-system_left">
@@ -185,6 +186,8 @@ class Product extends React.PureComponent<{}, {}, any> {
           </div>
         </div>
         <div className="index-container about-container pb-100" style={{ marginTop: this.state.isMobile ? '-20px' : '-50px' }}>
+          <a id="chuangguan"></a>
+
           <img className="banner product_img-mid-banner" src="/static/product/middle_banner.png" alt=""/>
           {this.state.isMobile ? <div className="product-qinghua_context">
             <p className="producti-qinghua_line">首创以“清华北大”</p>
@@ -198,7 +201,7 @@ class Product extends React.PureComponent<{}, {}, any> {
         </div>
 
         <div className="product-container index-container about-container pb-100 pt-100">
-          <div className="other-bg-block"></div>
+          <div className="other-bg-block"><a id="xinliu"></a></div>
           <div className="container" >
 
             <div className="improve-ways">
@@ -231,7 +234,9 @@ class Product extends React.PureComponent<{}, {}, any> {
           </div> :
           <div className="index-container about-container bg-gray pb-100 pt-100">
             <div className="container" >
+              <a id="offline"></a>
               <img className="product_img-offline" src="/static/product/offline.png" alt="" />
+              <a id="xueguan"></a>
               <img className="product_img-environment" src="/static/product/environment.png" alt=""/>
             </div>
           </div>

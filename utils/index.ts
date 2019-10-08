@@ -38,5 +38,5 @@ const uuid: () => string = () => {
 export default {
   throtting,
   debounce,
-  uuid
+  uuid,
 }

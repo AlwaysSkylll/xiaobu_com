@@ -11,6 +11,8 @@ import 'babel-polyfill'
 import { Affix, Input, Button } from 'antd';
 import HOST from '@/utils/api';
 import mobileDetect from 'ismobilejs'
+import { scrollToAnchor } from '@/utils/anchor'
+
 
 const telRegx = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/
 
@@ -31,6 +33,8 @@ class Layout extends React.Component {
   }
 
   componentDidMount() {
+    this.getAnchor()
+    console.log('mounted app')
     require('whatwg-fetch')
     this.setState({
       isMobile: mobileDetect(window.navigator.userAgent).any,
@@ -49,7 +53,12 @@ class Layout extends React.Component {
     Router.push(`/${path}`)
   }
 
+  getAnchor() {
+    scrollToAnchor(location.hash.slice(1))
+  }
+
   componentDidUpdate() {
+    this.getAnchor()
     let currentPath = Router && Router.router && Router.router.asPath
     currentPath = currentPath === '/' ? '/index' : currentPath
     if (currentPath === this.state.currentPath) return
@@ -202,29 +211,29 @@ class Layout extends React.Component {
           <div className="footer-list">
             <p className="title" onClick={this.to.bind(this, 'index')}>首页</p>
           </div>
-          <div className="footer-list" onClick={this.to.bind(this, 'product')}>
-            <p className="title">产品介绍</p>
-            <p className="item">线上学习系统</p>
-            <p className="item">五级闯关制</p>
-            <p className="item">心流理论</p>
-            <p className="item">线下学习中心</p>
-            <p className="item">学管师角色</p>
+          <div className="footer-list">
+            <p className="title" onClick={this.to.bind(this, 'product')}>产品介绍</p>
+            <p className="item" onClick={this.to.bind(this, 'product#online')}>线上学习系统</p>
+            <p className="item" onClick={this.to.bind(this, 'product#chuangguan')}>五级闯关制</p>
+            <p className="item" onClick={this.to.bind(this, 'product#xinliu')}>心流理论</p>
+            <p className="item" onClick={this.to.bind(this, 'product#offline')}>线下学习中心</p>
+            <p className="item" onClick={this.to.bind(this, 'product#xueguan')}>学管师角色</p>
           </div>
-          <div className="footer-list" onClick={this.to.bind(this, 'join')}>
-            <p className="title">招商加盟</p>
-            <p className="item">我们的优势</p>
-            <p className="item">门店采访</p>
-            <p className="item">加盟案例</p>
-            <p className="item">加盟支持</p>
-            <p className="item">加盟店分布图</p>
-            <p className="item">咨询留言</p>
+          <div className="footer-list" >
+            <p className="title" onClick={this.to.bind(this, 'join')}>招商加盟</p>
+            <p className="item" onClick={this.to.bind(this, 'join#advance')}>我们的优势</p>
+            <p className="item" onClick={this.to.bind(this, 'join#store')}>门店采访</p>
+            <p className="item" onClick={this.to.bind(this, 'join#examples')}>加盟案例</p>
+            <p className="item" onClick={this.to.bind(this, 'join#support')}>加盟支持</p>
+            <p className="item" onClick={this.to.bind(this, 'join#map')}>加盟店分布图</p>
+            <p className="item" onClick={this.to.bind(this, 'join#advice')}>咨询留言</p>
           </div>
-          <div className="footer-list" onClick={this.to.bind(this, 'about')}>
-            <p className="title">联系我们</p>
-            <p className="item">公司介绍</p>
-            <p className="item">团队介绍</p>
-            <p className="item">投资人介绍</p>
-            <p className="item">联系我们</p>
+          <div className="footer-list">
+            <p className="title" onClick={this.to.bind(this, 'about')}>联系我们</p>
+            <p className="item" onClick={this.to.bind(this, 'about#company')}>公司介绍</p>
+            <p className="item" onClick={this.to.bind(this, 'about#team')}>团队介绍</p>
+            <p className="item" onClick={this.to.bind(this, 'about#people')}>投资人介绍</p>
+            <p className="item" onClick={this.to.bind(this, 'about#contact')}>联系我们</p>
           </div>
           <div className="footer-list">
             <img className="qrcode" src="/static/home/qrcode.jpg"></img>
