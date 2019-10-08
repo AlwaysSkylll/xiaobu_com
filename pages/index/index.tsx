@@ -53,19 +53,19 @@ class Index extends React.PureComponent<{}, {}, any> {
       }
       console.error(data.msg)
     }, (error) => {
-      console.error('获取轮播图失败', error)
+      console.error('获取新闻失败', error)
     })
 
     this.setState({
       isMobile: mobileDetect(window.navigator.userAgent).any,
     })
 
-    // this.intervalId = setInterval(() => {
-    //   this.setState({
-    //     newsIndex: this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1)
-    //   })
-    //   console.log(this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1))
-    // }, 2500)
+    this.intervalId = setInterval(() => {
+      this.setState({
+        newsIndex: this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1)
+      })
+      console.log(this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1))
+    }, 2500)
 
     const { WOW } = require('wowjs')
     const wow = new WOW({
