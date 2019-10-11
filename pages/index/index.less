@@ -131,6 +131,11 @@
       }
       .right-img {
         width: 100%;
+        height: 266px;
+        @media screen and (max-width: @sizes[tablet]) {
+          display: block;
+          height: vw(98);
+        }
       }
       .complain {
         margin: 0;
@@ -275,7 +280,7 @@
     font-size: 18px;
     line-height: 1.5;
     @media screen and (max-width: @sizes[tablet]) {
-      height: vw(465);
+      height: vw(485);
       margin-top: vw(50);
       margin-bottom: vw(30);
       padding: 0;
@@ -313,9 +318,9 @@
       }
     }
     .detail {
+      text-align: justify;
       @media screen and (max-width: @sizes[tablet]) {
         font-size: vw(12);
-        transform: scale(0.9);
         padding: vw(350) vw(10) vw(10) vw(10);
       }
     }
@@ -351,6 +356,11 @@
     }
   }
   & + .introduce {
+    &:last-child {
+      @media screen and (max-width: @sizes[tablet]) {
+        margin-bottom: vw(70);
+      }
+    }
     .context {
       margin-top: 0;
     }

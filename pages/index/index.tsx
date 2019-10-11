@@ -6,6 +6,7 @@ import HOST from '../../utils/api';
 import Router from 'next/router'
 
 class Index extends React.PureComponent<{}, {}, any> {
+  intervalId: any = -1
   carouselRef: any = null
   setCarouselRef: any = null
   state: any = {
@@ -39,6 +40,7 @@ class Index extends React.PureComponent<{}, {}, any> {
   }
 
   componentDidMount() {
+    const isMobile = mobileDetect(window.navigator.userAgent).any
     window.fetch(`${HOST}/api/banner?type=index`, {
       method: 'GET',
     }).then((response) => {
@@ -71,9 +73,17 @@ class Index extends React.PureComponent<{}, {}, any> {
       console.error('获取新闻失败', error)
     })
 
-    this.setState({
-      isMobile: mobileDetect(window.navigator.userAgent).any,
-    })
+    this.setState({ isMobile })
+
+    if (isMobile) {
+      this.intervalId = setInterval(() => {
+        this.setState({
+          newsIndex: this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1)
+        })
+        console.log(this.state.newsIndex >= 2 ? 0 : (this.state.newsIndex + 1))
+      }, 2500)
+    }
+
 
     const { WOW } = require('wowjs')
     const wow = new WOW({
@@ -86,7 +96,7 @@ class Index extends React.PureComponent<{}, {}, any> {
   }
 
   componentWillUnmount() {
-
+    clearInterval(this.intervalId)
   }
 
   redirectNews(item) {
@@ -132,11 +142,11 @@ class Index extends React.PureComponent<{}, {}, any> {
               <div className="right-box">
                 {this.state.isMobile ?
                 [
-                  <img className="right-img" src={this.state.newsList[this.state.newsIndex].img} alt="" />,
+                  <img key={1} className="right-img" src={this.state.newsList[this.state.newsIndex].img} alt="" />,
                   this.state.newsList[this.state.newsIndex].news.map((item, index) => {
                     return (<p className="complain" key={index} onClick={this.redirectNews.bind(this, item)}>{index + 1}、{item.title}</p>)
                   }),
-                  <span style={{ float: 'right', position: 'relative', fontSize: this.state.isMobile ? '12px' : '16px', top: this.state.isMobile ? '-16px' : '-24px', color: '#00a7e1' }}>（点击标题，查看更多）</span>
+                  <span key={2} style={{ float: 'right', position: 'relative', fontSize: '12px', top: '0', color: '#00a7e1' }}>（点击标题，查看更多）</span>
                   ] : <Carousel ref={this.setCarouselRef} autoplay={true} afterChange={this.handleChange.bind(this)} dots={false} dotPosition="left">
                   {this.state.newsList.map((item, index) => {
                     return <div key={index} style={{width: '840px', height: '415px'}}>
@@ -144,7 +154,7 @@ class Index extends React.PureComponent<{}, {}, any> {
                       {item.news.map((itemNews, indexNews) => {
                         return <p className="complain" key={indexNews} onClick={this.redirectNews.bind(this, itemNews)}>{indexNews + 1}、{itemNews.title}</p>
                       })}
-                      <span style={{ float: 'right', position: 'relative', fontSize: this.state.isMobile ? '12px' : '16px', top: this.state.isMobile ? '-16px' : '-24px', color: '#00a7e1' }}>（点击标题，查看更多）</span>
+                      <span style={{ float: 'right', position: 'relative', fontSize: '12px', top: '0', color: '#00a7e1' }}>（点击标题，查看更多）</span>
                     </div>
                   })}
                 </Carousel>}
