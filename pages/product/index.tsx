@@ -14,6 +14,7 @@ const hoverdIcon = [
 ]
 
 class Product extends React.PureComponent<{}, {}, any> {
+  intervalId: any = 0
   setCarouselRef:any = null
   carouselRef:any = null
 
@@ -40,7 +41,7 @@ class Product extends React.PureComponent<{}, {}, any> {
       '五级闯关制度，点燃闯关斗志，激发学习兴趣',
       '了解学生学习情况、设置适合学生的学习目标、全程跟进引导'
     ],
-    chartsIndex: 5,
+    chartsIndex: 0,
   }
 
   onChange(currentSlide: number) {
@@ -52,6 +53,10 @@ class Product extends React.PureComponent<{}, {}, any> {
     if (!this.carouselRef) return
     this.carouselRef.goTo(index)
     this.setState({ onlineSystemIndex: index })
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId)
   }
 
   componentDidMount() {
@@ -91,6 +96,7 @@ class Product extends React.PureComponent<{}, {}, any> {
     if (!ECharts || this.state.isMobile) return
 
     const originOptionData = JSON.parse(JSON.stringify(optionData))
+    const chartsOptionData = JSON.parse(JSON.stringify(optionData))
 
     const option = {
       tooltip: {
@@ -104,7 +110,7 @@ class Product extends React.PureComponent<{}, {}, any> {
         show: false,
         labelLine: { show: false },
         startAngle: '126',
-        data: optionData,
+        data: chartsOptionData,
         itemStyle: {
           color: '#2a679f',
           borderColor: '#00a7e1',
@@ -118,28 +124,55 @@ class Product extends React.PureComponent<{}, {}, any> {
       myChart.setOption(option, true);
     }
 
-    myChart.on('mouseover', (params) => {
-      params.event.event.stopPropagation();
+    const cancleChartSelect = () => {
+      const index = this.state.chartsIndex
+      console.log(originOptionData[index].label.rich.b.color)
+      chartsOptionData[index].label.rich.b.fontSize = originOptionData[index].label.rich.b.fontSize
+      chartsOptionData[index].label.rich.b.color = originOptionData[index].label.rich.b.color
+      chartsOptionData[index].label.rich.icon.backgroundColor.image = originOptionData[index].label.rich.icon.backgroundColor.image
+      chartsOptionData[index].itemStyle.color = originOptionData[index].itemStyle.color
+      chartsOptionData[index].selected = false
+      myChart.setOption(option, true);
+    }
+
+    myChart.on('pieselected', (params) => {
+      params.selected.length = 5
+      const selectList = Array.from(params.selected)
+      const index = selectList.indexOf(true)
+      cancleChartSelect()
+      chartsOptionData[index].label.rich.b.fontSize = 28
+      chartsOptionData[index].label.rich.b.color = '#00a7e1'
+      chartsOptionData[index].label.rich.icon.backgroundColor.image = hoverdIcon[index]
+      chartsOptionData[index].itemStyle.color = '#fff'
+      chartsOptionData[index].selected = true
+      myChart.setOption(option, true);
+    })
+    myChart.on('click', (params) => {
       const index = params.dataIndex
-      optionData[index].label.rich.b.fontSize = 28
-      optionData[index].label.rich.b.color = '#00a7e1'
-      optionData[index].label.rich.icon.backgroundColor.image = hoverdIcon[index]
-      optionData[index].itemStyle.color = '#fff'
-      optionData[index].selected = true
+      cancleChartSelect()
+      chartsOptionData[index].label.rich.b.fontSize = 28
+      chartsOptionData[index].label.rich.b.color = '#00a7e1'
+      chartsOptionData[index].label.rich.icon.backgroundColor.image = hoverdIcon[index]
+      chartsOptionData[index].itemStyle.color = '#fff'
+      chartsOptionData[index].selected = true
       myChart.setOption(option, true);
       this.setState({ chartsIndex: index })
     })
 
-    myChart.on('mouseout', (params) => {
-      params.event.event.stopPropagation();
-      const index = params.dataIndex
-      optionData[index].label.rich.b.fontSize = originOptionData[index].label.rich.b.fontSize
-      optionData[index].label.rich.b.color = originOptionData[index].label.rich.b.color
-      optionData[index].label.rich.icon.backgroundColor.image = originOptionData[index].label.rich.icon.backgroundColor.image
-      optionData[index].itemStyle.color = originOptionData[index].itemStyle.color
-      optionData[index].selected = false
-      myChart.setOption(option, true);
-    })
+    myChart.dispatchAction({
+      type: 'pieSelect',
+      dataIndex: 0,
+    });
+
+    this.intervalId = setInterval(() => {
+      const chartsIndex = this.state.chartsIndex >= 4 ? 0 : (this.state.chartsIndex + 1)
+      console.log(chartsIndex)
+      myChart.dispatchAction({
+        type: 'pieSelect',
+        dataIndex: chartsIndex,
+      });
+      this.setState({ chartsIndex })
+    }, 3500)
   }
 
   public render() {
@@ -272,7 +305,7 @@ class Product extends React.PureComponent<{}, {}, any> {
             <img className="product_img-adapt_study" src="/static/product/adapt_study.png" alt="" />
             <p className="product_adapt-context">五大产品功能，打通学生提升通道的“任督二脉”</p>
 
-            {this.state.isMobile ? <img className="max-width" src="/static/product/chart-mobile.png" alt="" /> : <div className="chart-container wow bounceIn">
+            {this.state.isMobile ? <img className="max-width wow bounceIn" src="/static/product/chart-mobile.png" alt="" /> : <div className="chart-container wow bounceIn">
               <div id="container" style={{ width: '100%', height: '100%', margin: 'auto'}}></div>
               <div style={{ color: 'white', fontSize: '16px', position: 'absolute', top: '50%', left: '50%', marginLeft: '-80px', marginTop: '-80px', width: '160px', height: '160px', borderRadius: '50%', display: 'flex', alignItems: 'center' }}>{this.state.hoverText[this.state.chartsIndex]}</div>
             </div>}

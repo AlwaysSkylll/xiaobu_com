@@ -1,7 +1,7 @@
 export const optionData = [
   {
     value: 1,
-    name: '智能学习一对一',
+    name: '0',
     label: {
       position: 'inner',
       formatter: '{icon|} \n {b|智能学习一对一} ',
@@ -27,7 +27,7 @@ export const optionData = [
   },
   {
     value: 1,
-    name: '个性化学习方案',
+    name: '1',
     label: {
       position: 'inner',
       formatter: '{icon|} \n {b|个性化\n学习方案} ',
@@ -53,7 +53,7 @@ export const optionData = [
   },
   {
     value: 1,
-    name: '同步课堂训练',
+    name: '2',
     label: {
       position: 'inner',
       formatter: '{icon|} \n {b|同步课堂训练} ',
@@ -79,7 +79,7 @@ export const optionData = [
   },
   {
     value: 1,
-    name: '游戏化通关模式',
+    name: '3',
     label: {
       position: 'inner',
       formatter: '{icon|} \n {b|游戏化通关模式} ',
@@ -105,7 +105,7 @@ export const optionData = [
   },
   {
     value: 1,
-    name: '学管师的监督引导',
+    name: '4',
     label: {
       position: 'inner',
       formatter: '{icon|} \n {b|学管师的\n监督引导} ',
