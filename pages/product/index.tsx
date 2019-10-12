@@ -140,7 +140,7 @@ class Product extends React.PureComponent<{}, {}, any> {
       const selectList = Array.from(params.selected)
       const index = selectList.indexOf(true)
       cancleChartSelect()
-      chartsOptionData[index].label.rich.b.fontSize = 28
+      chartsOptionData[index].label.rich.b.fontSize = 25
       chartsOptionData[index].label.rich.b.color = '#00a7e1'
       chartsOptionData[index].label.rich.icon.backgroundColor.image = hoverdIcon[index]
       chartsOptionData[index].itemStyle.color = '#fff'
@@ -150,7 +150,7 @@ class Product extends React.PureComponent<{}, {}, any> {
     myChart.on('click', (params) => {
       const index = params.dataIndex
       cancleChartSelect()
-      chartsOptionData[index].label.rich.b.fontSize = 28
+      chartsOptionData[index].label.rich.b.fontSize = 25
       chartsOptionData[index].label.rich.b.color = '#00a7e1'
       chartsOptionData[index].label.rich.icon.backgroundColor.image = hoverdIcon[index]
       chartsOptionData[index].itemStyle.color = '#fff'
