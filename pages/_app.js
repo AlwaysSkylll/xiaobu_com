@@ -158,17 +158,17 @@ class Layout extends React.Component {
             <img src="/static/home/phone.png"></img>
           </div>
           <div className="side-bar_content">
-            <div className="contact-way">咨询<br/>电话</div>
+            <div className="contact-way">招商<br/>电话</div>
             <div className="contact-number">155<br/>05882806</div>
           </div>
         </div>
         <div className="side-bar_item">
           <div className="side-bar_icon">
-            <img src="/static/home/qq.png"></img>
+            <img src="/static/home/phone.png"></img>
           </div>
           <div className="side-bar_content">
-            <div className="contact-way">咨询<br/>Q Q</div>
-            <div className="contact-number">15<br/>20927740</div>
+            <div className="contact-way">客服<br/>电话</div>
+            <div className="contact-number">183<br />57157914</div>
           </div>
         </div>
       </section>
@@ -176,7 +176,7 @@ class Layout extends React.Component {
       <section className="side-bar_mobile">
         <div className="side-bar_item">
           <div className="side-bar_icon">
-            <img src="/static/home/phone.png"></img>联系小步
+            <img src="/static/home/phone.png"></img>招商电话
           </div>
           <div className="side-bar_content">
             {/* <div className="contact-way"></div> */}
@@ -185,11 +185,11 @@ class Layout extends React.Component {
         </div>
         <div className="side-bar_item">
           <div className="side-bar_icon">
-            <img src="/static/home/qq.png"></img>咨询QQ
+            <img src="/static/home/phone.png"></img>客服电话
           </div>
           <div className="side-bar_content">
             {/* <div className="contact-way"></div> */}
-            <div className="contact-number">1520927740</div>
+            <div className="contact-number">18357157914</div>
           </div>
         </div>
       </section>
